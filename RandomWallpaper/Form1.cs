@@ -33,6 +33,7 @@ namespace RandomWallpaper
         //Индекс выбранного изображения.
         private int CurrentItem = -1;
 
+        public bool IsAllGood { get; private set; }
 
         private void BtnFindFolder_Click(object sender, EventArgs e)
         {
@@ -43,8 +44,7 @@ namespace RandomWallpaper
 
                 if (BacgroundsArray.Count != 0 && CbxAutoLoad.Checked)
                 {
-                    CbxAutoLoad.Checked = false;
-                    CbxAutoLoad.Checked = true;
+                    ChbxAutoLoad_CheckedChanged(null, null);
                 }
             }
         }
@@ -76,6 +76,7 @@ namespace RandomWallpaper
             {
             }
 
+
             if (BacgroundsArray.Count == 0)
             {
                 MessageBox.Show("Изображения не найдены", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -96,20 +97,44 @@ namespace RandomWallpaper
         {
             Random rnd = new Random();
 
-            int Index = rnd.Next(BacgroundsArray.Count - 1);
+            int Index = -1;
 
-            try
+            IsAllGood = false;
+
+            do
             {
-                PbxRandom.Image = Image.FromFile(BacgroundsArray[Index].PathImage);
-            }
-            catch
-            {
-                BacgroundsArray.RemoveAt(Index);
+                if(BacgroundsArray.Count == 0)
+                {
+                    NotFoundImage();
+                    break;
+                }
+
                 Index = rnd.Next(BacgroundsArray.Count - 1);
-                PbxRandom.Image = Image.FromFile(BacgroundsArray[Index].PathImage);
-            }
 
-            CurrentItem = Index;
+                try
+                {
+                    PbxRandom.Image = Image.FromFile(BacgroundsArray[Index].PathImage);
+                    IsAllGood = true;
+                }
+                catch
+                {
+                    BacgroundsArray.RemoveAt(Index);
+                }
+
+                CurrentItem = Index;
+
+            } while (!IsAllGood);
+
+            
+        }
+
+        private void NotFoundImage()
+        {
+            MessageBox.Show("Изображения не найдены", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            CurrentItem = -1;
+            CbxAutoLoad.Checked = false;
+            CbxChange.Checked = false;
+            TbxFolder.Text = "";
         }
 
         private void BtnSelectAndSet_Click(object sender, EventArgs e)
@@ -246,10 +271,8 @@ namespace RandomWallpaper
         /// <param name="e"></param>
         private void TbxFolder_TextChanged(object sender, EventArgs e)
         {
-            if (TbxFolder.Text == String.Empty)
-                CbxAutoLoad.Enabled = false;
-            else
-                CbxAutoLoad.Enabled = true;
+            CbxAutoLoad.Enabled = TbxFolder.Text != String.Empty;
+            CbxChange.Enabled = TbxFolder.Text != String.Empty;
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -289,6 +312,39 @@ namespace RandomWallpaper
             }
 
             SelectImage();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            BtnSelectAndSet_Click(null, null);
+        }
+
+        private void CbxChange_CheckedChanged(object sender, EventArgs e)
+        {
+            if(CbxChange.Checked)
+            {
+                timer1.Interval = int.Parse(TbxTime.Text) * 60000;
+                timer1.Enabled = true;
+            } 
+            else
+            {
+                timer1.Enabled = false;
+            }
+        }
+
+        private void TbxTime_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!Char.IsDigit(e.KeyChar))
+                e.Handled = true;
+
+            if ((Keys)e.KeyChar == Keys.Back)
+                e.Handled = false;
+        }
+
+        private void TbxTime_TextChanged(object sender, EventArgs e)
+        {
+            if (TbxTime.Text.Equals("0"))
+                TbxTime.Text = "5";
         }
     }
 }

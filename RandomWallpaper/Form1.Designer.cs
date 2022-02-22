@@ -43,6 +43,10 @@
             this.GpProperties = new System.Windows.Forms.GroupBox();
             this.CbxAutoLoad = new System.Windows.Forms.CheckBox();
             this.BtnSelect = new System.Windows.Forms.Button();
+            this.CbxChange = new System.Windows.Forms.CheckBox();
+            this.TbxTime = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.PbxRandom)).BeginInit();
             this.GpProperties.SuspendLayout();
             this.SuspendLayout();
@@ -168,6 +172,9 @@
             // 
             // GpProperties
             // 
+            this.GpProperties.Controls.Add(this.label3);
+            this.GpProperties.Controls.Add(this.TbxTime);
+            this.GpProperties.Controls.Add(this.CbxChange);
             this.GpProperties.Controls.Add(this.CbxAutoLoad);
             this.GpProperties.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.GpProperties.Location = new System.Drawing.Point(30, 390);
@@ -202,6 +209,47 @@
             this.BtnSelect.Text = "Выбрать";
             this.BtnSelect.UseVisualStyleBackColor = false;
             this.BtnSelect.Click += new System.EventHandler(this.BtnSelect_Click);
+            // 
+            // CbxChange
+            // 
+            this.CbxChange.AutoSize = true;
+            this.CbxChange.Enabled = false;
+            this.CbxChange.Location = new System.Drawing.Point(6, 76);
+            this.CbxChange.Name = "CbxChange";
+            this.CbxChange.Size = new System.Drawing.Size(234, 30);
+            this.CbxChange.TabIndex = 1;
+            this.CbxChange.Text = "Менять обои каждые ";
+            this.CbxChange.UseVisualStyleBackColor = true;
+            this.CbxChange.CheckedChanged += new System.EventHandler(this.CbxChange_CheckedChanged);
+            // 
+            // TbxTime
+            // 
+            this.TbxTime.BackColor = System.Drawing.Color.White;
+            this.TbxTime.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TbxTime.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.TbxTime.Location = new System.Drawing.Point(236, 75);
+            this.TbxTime.MaxLength = 3;
+            this.TbxTime.Name = "TbxTime";
+            this.TbxTime.Size = new System.Drawing.Size(98, 31);
+            this.TbxTime.TabIndex = 14;
+            this.TbxTime.Text = "5";
+            this.TbxTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.TbxTime.TextChanged += new System.EventHandler(this.TbxTime_TextChanged);
+            this.TbxTime.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TbxTime_KeyPress);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(340, 77);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(67, 26);
+            this.label3.TabIndex = 14;
+            this.label3.Text = "минут";
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Form1
             // 
@@ -249,6 +297,10 @@
         private System.Windows.Forms.GroupBox GpProperties;
         private System.Windows.Forms.CheckBox CbxAutoLoad;
         private System.Windows.Forms.Button BtnSelect;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox TbxTime;
+        private System.Windows.Forms.CheckBox CbxChange;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
