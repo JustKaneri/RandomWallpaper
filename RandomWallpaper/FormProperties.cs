@@ -1,0 +1,111 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace RandomWallpaper
+{
+    public partial class FormProperties : Form
+    {
+        public FormProperties()
+        {
+            InitializeComponent();
+        }
+
+        private void BtnSelect_Click(object sender, EventArgs e)
+        {
+            TabPanel.SelectedIndex = 0;
+
+        }
+
+        private void BtnUI_Click(object sender, EventArgs e)
+        {
+            TabPanel.SelectedIndex = 1;
+        }
+
+        private void BtnTotal_Click(object sender, EventArgs e)
+        {
+            TabPanel.SelectedIndex = 2;
+        }
+
+        private void PbxColorBack_Click(object sender, EventArgs e)
+        {
+             if(colorDialog1.ShowDialog() == DialogResult.OK)
+             {
+                BtnTest.BackColor = colorDialog1.Color;
+                PbxColorBack.BackColor = colorDialog1.Color;
+             }
+        }
+
+        private void PbxColorFont_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                BtnTest.ForeColor = colorDialog1.Color;
+                PbxColorFont.BackColor = colorDialog1.Color;
+            }
+        }
+
+        private void PbxBorderColor_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                controlBox1.BorderColor = colorDialog1.Color;
+                PbxBorderColor.BackColor = colorDialog1.Color;
+               
+            }
+        }
+
+        private void BtnSave_Click(object sender, EventArgs e)
+        {
+            Configurat configurat = new Configurat();
+            configurat.BackColorButton = BtnTest.BackColor;
+            configurat.FontColorButton = BtnTest.ForeColor;
+            configurat.BorderColorButton = controlBox1.BorderColor;
+
+            PropertiesManager manager = new PropertiesManager(this);
+            manager.SaveUI(configurat);
+            PaintUI();
+        }
+
+        private void FormProperties_Load(object sender, EventArgs e)
+        {
+            PaintUI();
+
+            PbxColorBack.BackColor = BtnTest.BackColor;
+            PbxColorFont.BackColor = BtnTest.ForeColor;
+            PbxBorderColor.BackColor = controlBox1.BorderColor;
+        }
+        
+        private void PaintUI()
+        {
+            PropertiesManager manager = new PropertiesManager(this);
+            var cfg = manager.GetConfigurat();
+            BtnSave.BackColor = cfg.BackColorButton;
+            BtnSave.ForeColor = cfg.FontColorButton;
+
+            BtnDef.BackColor = cfg.BackColorButton;
+            BtnDef.ForeColor = cfg.FontColorButton;
+
+            BtnTest.BackColor = cfg.BackColorButton;
+            BtnTest.ForeColor = cfg.FontColorButton;
+
+            controlBox1.BorderColor = cfg.BorderColorButton;
+            
+            this.Opacity = 0.9;
+            this.Opacity = 1;
+        }
+
+        private void BtnDef_Click(object sender, EventArgs e)
+        {
+            PropertiesManager manager = new PropertiesManager(this);
+            manager.DefaultProperties();
+            PaintUI();
+        }
+    }
+}

@@ -21,20 +21,10 @@ namespace RandomWallpaper
             InitializeComponent();
         }
 
-        const int SPI_SETDESKWALLPAPER = 20;
-        const int SPIF_UPDATEINIFILE = 0x01;
-        const int SPIF_SENDWININICHANGE = 0x02;
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
-
         //Список изображений.
         private List<ImageBacground> BacgroundsArray = new List<ImageBacground>();
-        //Индекс выбранного изображения.
-        private int CurrentItem = -1;
-
-        public bool IsAllGood { get; private set; }
-
+        private Manager manager;
+        
         private void BtnFindFolder_Click(object sender, EventArgs e)
         {
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
@@ -81,58 +71,19 @@ namespace RandomWallpaper
             if (BacgroundsArray.Count == 0)
             {
                 MessageBox.Show("Изображения не найдены", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                PbxRandom.Image = null;
-                TbxFolder.Clear();
+                PbxLast.Image = null;
+                TbxFolder.Text = "";
                 return;
             }
             else
             {
-                SelectImage();
+                manager.GetNewImage(BacgroundsArray);
             }
-        }
-
-        /// <summary>
-        /// Выбор обоев.
-        /// </summary>
-        private void SelectImage()
-        {
-            Random rnd = new Random();
-
-            int Index = -1;
-
-            IsAllGood = false;
-
-            do
-            {
-                if(BacgroundsArray.Count == 0)
-                {
-                    NotFoundImage();
-                    break;
-                }
-
-                Index = rnd.Next(BacgroundsArray.Count - 1);
-
-                try
-                {
-                    PbxRandom.Image = Image.FromFile(BacgroundsArray[Index].PathImage);
-                    IsAllGood = true;
-                }
-                catch
-                {
-                    BacgroundsArray.RemoveAt(Index);
-                }
-
-                CurrentItem = Index;
-
-            } while (!IsAllGood);
-
-            
         }
 
         private void NotFoundImage()
         {
             MessageBox.Show("Изображения не найдены", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            CurrentItem = -1;
             CbxAutoLoad.Checked = false;
             CbxChange.Checked = false;
             TbxFolder.Text = "";
@@ -140,33 +91,16 @@ namespace RandomWallpaper
 
         private void BtnSelectAndSet_Click(object sender, EventArgs e)
         {
-
             if (BacgroundsArray.Count == 0)
             {
                 MessageBox.Show("Изображения не найдены", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            SelectImage();
-            SetImage();
-        }
-
-        /// <summary>
-        /// Установка обоев.
-        /// </summary>
-        private void SetImage()
-        {
-            using (var key = Registry.CurrentUser.OpenSubKey("Control Panel\\Desktop", true))
-            {
-                key.SetValue("WallPaper", BacgroundsArray[CurrentItem].PathImage);
-            }
-
-            SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, BacgroundsArray[CurrentItem].PathImage, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
-
-            CurrentItem = -1;
-
-            AlertShow();
-        }
+            manager.GetNewImage(BacgroundsArray);
+            manager.SetImage();
+            manager.SetImageOnWallpaper();
+        }  
 
         /// <summary>
         /// Кнопка установить обои.
@@ -175,8 +109,15 @@ namespace RandomWallpaper
         /// <param name="e"></param>
         private void BtnSet_Click(object sender, EventArgs e)
         {
-            if (CurrentItem != -1)
-                SetImage();
+            try
+            {
+                manager.SetImage();
+                manager.SetImageOnWallpaper();
+                manager.GetNewImage(BacgroundsArray);
+            }
+            catch 
+            {
+            }
         }
 
         /// <summary>
@@ -236,6 +177,9 @@ namespace RandomWallpaper
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
+            PropertiesManager managerProp = new PropertiesManager(this);
+            managerProp.SetUI();
+
             string[] arg = Environment.GetCommandLineArgs();
 
             if (arg.Length > 1)
@@ -252,6 +196,8 @@ namespace RandomWallpaper
                 }
 
             }
+
+            manager = new Manager(this);
 
             using (var reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"))
             {
@@ -312,7 +258,7 @@ namespace RandomWallpaper
                 return;
             }
 
-            SelectImage();
+            manager.GetNewImage(BacgroundsArray);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -346,6 +292,38 @@ namespace RandomWallpaper
         {
             if (TbxTime.Text.Equals("0"))
                 TbxTime.Text = "5";
+        }
+
+        private void PbxLast_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                manager.SetLastWallpaper();
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void PbxRandom_Click(object sender, EventArgs e)
+        {
+            if (BacgroundsArray.Count == 0)
+            {
+                MessageBox.Show("Изображения не найдены", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            manager.GetNewImage(BacgroundsArray);
+        }
+
+        private void LbxProperties_Click(object sender, EventArgs e)
+        {
+            FormProperties properties = new FormProperties();
+            properties.ShowDialog();
+
+            PropertiesManager managerProp = new PropertiesManager(this);
+            managerProp.SetUI();
         }
     }
 }
