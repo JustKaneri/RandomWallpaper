@@ -70,6 +70,7 @@ namespace RandomWallpaper
                         bacground.PathImage = file[i];
                         BacgroundsArray.Add(bacground);
                     }
+                    
                 }
             }
             catch
