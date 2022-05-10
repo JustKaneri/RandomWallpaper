@@ -12,9 +12,13 @@ namespace RandomWallpaper
 {
     public partial class FormProperties : Form
     {
-        public FormProperties()
+        private string Path;
+
+        public FormProperties(string path)
         {
             InitializeComponent();
+
+            Path = path;
         }
 
         private void BtnSelect_Click(object sender, EventArgs e)
@@ -80,6 +84,10 @@ namespace RandomWallpaper
             PbxColorBack.BackColor = BtnTest.BackColor;
             PbxColorFont.BackColor = BtnTest.ForeColor;
             PbxBorderColor.BackColor = controlBox1.BorderColor;
+
+            PropertiesManager manager = new PropertiesManager(this);
+
+            CbxAutoLoad.Checked = manager.IsAutoLoad();
         }
         
         private void PaintUI()
@@ -106,6 +114,41 @@ namespace RandomWallpaper
             PropertiesManager manager = new PropertiesManager(this);
             manager.DefaultProperties();
             PaintUI();
+        }
+
+        private void TbxTime_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!Char.IsDigit(e.KeyChar))
+                e.Handled = true;
+
+            if ((Keys)e.KeyChar == Keys.Back)
+                e.Handled = false;
+        }
+
+        private void TbxTime_TextChanged(object sender, EventArgs e)
+        {
+            if (TbxTime.Text.Equals("0"))
+                TbxTime.Text = "5";
+        }
+
+        private void CbxAutoLoad_CheckedChanged(object sender, EventArgs e)
+        {
+            PropertiesManager manager = new PropertiesManager(this);
+
+            if (CbxAutoLoad.Checked)
+            {
+                if(string.IsNullOrWhiteSpace(Path))
+                {
+                    MessageBox.Show("Для того что бы установить автозагрузку, нужно выбрать папку с обоями в главном окне.", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                
+                manager.SetAutoLoadApp(Path);
+            }
+            else
+            {
+                manager.DisAutoLoadApp();
+            }
         }
     }
 }

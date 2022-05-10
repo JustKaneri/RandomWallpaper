@@ -31,11 +31,7 @@ namespace RandomWallpaper
             {
                 TbxFolder.Text = folderBrowserDialog1.SelectedPath;
                 GetFiles();
-
-                if (BacgroundsArray.Count != 0 && CbxAutoLoad.Checked)
-                {
-                    ChbxAutoLoad_CheckedChanged(null, null);
-                }
+                
             }
         }
 
@@ -80,15 +76,7 @@ namespace RandomWallpaper
                 manager.GetNewImage(BacgroundsArray);
             }
         }
-
-        private void NotFoundImage()
-        {
-            MessageBox.Show("Изображения не найдены", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            CbxAutoLoad.Checked = false;
-            CbxChange.Checked = false;
-            TbxFolder.Text = "";
-        }
-
+        
         private void BtnSelectAndSet_Click(object sender, EventArgs e)
         {
             if (BacgroundsArray.Count == 0)
@@ -109,6 +97,9 @@ namespace RandomWallpaper
         /// <param name="e"></param>
         private void BtnSet_Click(object sender, EventArgs e)
         {
+            if (PbxRandom.Image == null)
+                return;
+
             try
             {
                 manager.SetImage();
@@ -130,44 +121,6 @@ namespace RandomWallpaper
             notifyIcon1.BalloonTipTitle = "Успех";
             notifyIcon1.ShowBalloonTip(4);
 
-        }
-  
-        private void ChbxAutoLoad_CheckedChanged(object sender, EventArgs e)
-        {
-            if (CbxAutoLoad.Checked)
-            {
-                SetAutoLoadApp();
-            }
-            else
-            {
-                DisAutoLoadApp();
-            }
-        }
-
-        /// <summary>
-        /// Удаление из автозагрузки.
-        /// </summary>
-        private void DisAutoLoadApp()
-        {
-            using (var reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true))
-            {
-                if (reg.GetValue(Application.ProductName) != null)
-                    reg.DeleteValue(Application.ProductName);
-
-            }
-        }
-
-        /// <summary>
-        /// Установка автозагрузки
-        /// </summary>
-        private void SetAutoLoadApp()
-        {
-            string Exect = $"\"{Application.ExecutablePath}\" {TbxFolder.Text} fon";
-
-            using (var reg = Registry.CurrentUser.CreateSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run\\"))
-            {
-                reg.SetValue(Application.ProductName, Exect);
-            }
         }
 
         /// <summary>
@@ -204,23 +157,23 @@ namespace RandomWallpaper
                 if(reg.GetValue(Application.ProductName) != null)
                 {
                     TbxFolder.Text = reg.GetValue(Application.ProductName).ToString().Split(' ')[1];
-                    CbxAutoLoad.Checked = true;
+                    
                     GetFiles();
                 }
                 
             }
         }
 
-        /// <summary>
-        /// Блокировка автозагруки если путь не указан.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TbxFolder_TextChanged(object sender, EventArgs e)
-        {
-            CbxAutoLoad.Enabled = TbxFolder.Text != String.Empty;
-            CbxChange.Enabled = TbxFolder.Text != String.Empty;
-        }
+        ///// <summary>
+        ///// Блокировка автозагруки если путь не указан.
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private void TbxFolder_TextChanged(object sender, EventArgs e)
+        //{
+        //    CbxAutoLoad.Enabled = TbxFolder.Text != String.Empty;
+        //    CbxChange.Enabled = TbxFolder.Text != String.Empty;
+        //}
 
         private void Form1_Resize(object sender, EventArgs e)
         {
@@ -266,18 +219,18 @@ namespace RandomWallpaper
             BtnSelectAndSet_Click(null, null);
         }
 
-        private void CbxChange_CheckedChanged(object sender, EventArgs e)
-        {
-            if(CbxChange.Checked)
-            {
-                timer1.Interval = int.Parse(TbxTime.Text) * 60000;
-                timer1.Enabled = true;
-            } 
-            else
-            {
-                timer1.Enabled = false;
-            }
-        }
+        //private void CbxChange_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    if(CbxChange.Checked)
+        //    {
+        //        timer1.Interval = int.Parse(TbxTime.Text) * 60000;
+        //        timer1.Enabled = true;
+        //    } 
+        //    else
+        //    {
+        //        timer1.Enabled = false;
+        //    }
+        //}
 
         private void TbxTime_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -288,11 +241,11 @@ namespace RandomWallpaper
                 e.Handled = false;
         }
 
-        private void TbxTime_TextChanged(object sender, EventArgs e)
-        {
-            if (TbxTime.Text.Equals("0"))
-                TbxTime.Text = "5";
-        }
+        //private void TbxTime_TextChanged(object sender, EventArgs e)
+        //{
+        //    if (TbxTime.Text.Equals("0"))
+        //        TbxTime.Text = "5";
+        //}
 
         private void PbxLast_Click(object sender, EventArgs e)
         {
@@ -319,7 +272,7 @@ namespace RandomWallpaper
 
         private void LbxProperties_Click(object sender, EventArgs e)
         {
-            FormProperties properties = new FormProperties();
+            FormProperties properties = new FormProperties(TbxFolder.Text);
             properties.ShowDialog();
 
             PropertiesManager managerProp = new PropertiesManager(this);

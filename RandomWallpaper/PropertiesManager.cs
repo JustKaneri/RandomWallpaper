@@ -8,6 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using CustomUIDll;
 using System.Drawing;
+using Microsoft.Win32;
 
 namespace RandomWallpaper
 {
@@ -90,6 +91,41 @@ namespace RandomWallpaper
             conf.BorderColorButton = Color.FromArgb(64,0,64);
 
             SaveUI(conf);
+        }
+
+        public void DisAutoLoadApp()
+        {
+            using (var reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true))
+            {
+                if (reg.GetValue(Application.ProductName) != null)
+                    reg.DeleteValue(Application.ProductName);
+
+            }
+        }
+
+        internal bool IsAutoLoad()
+        {
+            bool f = false;
+
+            using (var reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"))
+            {
+                if (reg.GetValue(Application.ProductName) != null)
+                {
+                    f = true;
+                }
+            }
+
+            return f;
+        }
+
+        public void SetAutoLoadApp(string path)
+        {
+            string Exect = $"\"{Application.ExecutablePath}\" {path} fon";
+
+            using (var reg = Registry.CurrentUser.CreateSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run\\"))
+            {
+                reg.SetValue(Application.ProductName, Exect);
+            }
         }
     }
 }

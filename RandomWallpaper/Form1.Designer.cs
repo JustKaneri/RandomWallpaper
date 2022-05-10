@@ -39,11 +39,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.BtnSelectAndSet = new System.Windows.Forms.Button();
             this.BtnSet = new System.Windows.Forms.Button();
-            this.GpProperties = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.TbxTime = new System.Windows.Forms.TextBox();
-            this.CbxChange = new System.Windows.Forms.CheckBox();
-            this.CbxAutoLoad = new System.Windows.Forms.CheckBox();
             this.BtnSelect = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.label4 = new System.Windows.Forms.Label();
@@ -53,7 +48,6 @@
             this.TbxFolder = new System.Windows.Forms.ComboBox();
             this.LbxProperties = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.PbxLast)).BeginInit();
-            this.GpProperties.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PbxNow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxRandom)).BeginInit();
             this.SuspendLayout();
@@ -132,7 +126,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(76, 138);
+            this.label2.Location = new System.Drawing.Point(111, 138);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(182, 26);
             this.label2.TabIndex = 8;
@@ -144,9 +138,9 @@
             this.BtnSelectAndSet.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnSelectAndSet.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.BtnSelectAndSet.ForeColor = System.Drawing.Color.White;
-            this.BtnSelectAndSet.Location = new System.Drawing.Point(985, 534);
+            this.BtnSelectAndSet.Location = new System.Drawing.Point(969, 534);
             this.BtnSelectAndSet.Name = "BtnSelectAndSet";
-            this.BtnSelectAndSet.Size = new System.Drawing.Size(265, 40);
+            this.BtnSelectAndSet.Size = new System.Drawing.Size(281, 40);
             this.BtnSelectAndSet.TabIndex = 10;
             this.BtnSelectAndSet.Text = "Выбрать и установить";
             this.BtnSelectAndSet.UseVisualStyleBackColor = false;
@@ -158,76 +152,13 @@
             this.BtnSet.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnSet.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.BtnSet.ForeColor = System.Drawing.Color.White;
-            this.BtnSet.Location = new System.Drawing.Point(427, 534);
+            this.BtnSet.Location = new System.Drawing.Point(418, 534);
             this.BtnSet.Name = "BtnSet";
-            this.BtnSet.Size = new System.Drawing.Size(552, 40);
+            this.BtnSet.Size = new System.Drawing.Size(545, 40);
             this.BtnSet.TabIndex = 11;
             this.BtnSet.Text = "Установить";
             this.BtnSet.UseVisualStyleBackColor = false;
             this.BtnSet.Click += new System.EventHandler(this.BtnSet_Click);
-            // 
-            // GpProperties
-            // 
-            this.GpProperties.Controls.Add(this.label3);
-            this.GpProperties.Controls.Add(this.TbxTime);
-            this.GpProperties.Controls.Add(this.CbxChange);
-            this.GpProperties.Controls.Add(this.CbxAutoLoad);
-            this.GpProperties.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.GpProperties.Location = new System.Drawing.Point(1217, 588);
-            this.GpProperties.Name = "GpProperties";
-            this.GpProperties.Size = new System.Drawing.Size(92, 19);
-            this.GpProperties.TabIndex = 12;
-            this.GpProperties.TabStop = false;
-            this.GpProperties.Text = "Доп параметры";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(340, 77);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(67, 26);
-            this.label3.TabIndex = 14;
-            this.label3.Text = "минут";
-            // 
-            // TbxTime
-            // 
-            this.TbxTime.BackColor = System.Drawing.Color.White;
-            this.TbxTime.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TbxTime.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.TbxTime.Location = new System.Drawing.Point(236, 75);
-            this.TbxTime.MaxLength = 3;
-            this.TbxTime.Name = "TbxTime";
-            this.TbxTime.Size = new System.Drawing.Size(98, 31);
-            this.TbxTime.TabIndex = 14;
-            this.TbxTime.Text = "5";
-            this.TbxTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.TbxTime.TextChanged += new System.EventHandler(this.TbxTime_TextChanged);
-            this.TbxTime.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TbxTime_KeyPress);
-            // 
-            // CbxChange
-            // 
-            this.CbxChange.AutoSize = true;
-            this.CbxChange.Enabled = false;
-            this.CbxChange.Location = new System.Drawing.Point(6, 76);
-            this.CbxChange.Name = "CbxChange";
-            this.CbxChange.Size = new System.Drawing.Size(234, 30);
-            this.CbxChange.TabIndex = 1;
-            this.CbxChange.Text = "Менять обои каждые ";
-            this.CbxChange.UseVisualStyleBackColor = true;
-            this.CbxChange.CheckedChanged += new System.EventHandler(this.CbxChange_CheckedChanged);
-            // 
-            // CbxAutoLoad
-            // 
-            this.CbxAutoLoad.AutoSize = true;
-            this.CbxAutoLoad.Enabled = false;
-            this.CbxAutoLoad.Location = new System.Drawing.Point(6, 40);
-            this.CbxAutoLoad.Name = "CbxAutoLoad";
-            this.CbxAutoLoad.Size = new System.Drawing.Size(361, 30);
-            this.CbxAutoLoad.TabIndex = 0;
-            this.CbxAutoLoad.Text = "Смена обоев при загрузке Windows";
-            this.CbxAutoLoad.UseVisualStyleBackColor = true;
-            this.CbxAutoLoad.CheckedChanged += new System.EventHandler(this.ChbxAutoLoad_CheckedChanged);
             // 
             // BtnSelect
             // 
@@ -235,7 +166,7 @@
             this.BtnSelect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnSelect.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.BtnSelect.ForeColor = System.Drawing.Color.White;
-            this.BtnSelect.Location = new System.Drawing.Point(138, 534);
+            this.BtnSelect.Location = new System.Drawing.Point(131, 534);
             this.BtnSelect.Name = "BtnSelect";
             this.BtnSelect.Size = new System.Drawing.Size(281, 40);
             this.BtnSelect.TabIndex = 13;
@@ -251,7 +182,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(622, 96);
+            this.label4.Location = new System.Drawing.Point(609, 96);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(149, 26);
             this.label4.TabIndex = 15;
@@ -270,7 +201,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(1101, 138);
+            this.label5.Location = new System.Drawing.Point(1074, 138);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(176, 26);
             this.label5.TabIndex = 17;
@@ -288,6 +219,7 @@
             // 
             // TbxFolder
             // 
+            this.TbxFolder.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.TbxFolder.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.TbxFolder.FormattingEnabled = true;
             this.TbxFolder.Location = new System.Drawing.Point(138, 59);
@@ -319,7 +251,6 @@
             this.Controls.Add(this.PbxNow);
             this.Controls.Add(this.BtnSelectAndSet);
             this.Controls.Add(this.BtnSelect);
-            this.Controls.Add(this.GpProperties);
             this.Controls.Add(this.BtnSet);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.PbxLast);
@@ -335,8 +266,6 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Resize += new System.EventHandler(this.Form1_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.PbxLast)).EndInit();
-            this.GpProperties.ResumeLayout(false);
-            this.GpProperties.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PbxNow)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxRandom)).EndInit();
             this.ResumeLayout(false);
@@ -354,12 +283,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button BtnSelectAndSet;
         private System.Windows.Forms.Button BtnSet;
-        private System.Windows.Forms.GroupBox GpProperties;
-        private System.Windows.Forms.CheckBox CbxAutoLoad;
         private System.Windows.Forms.Button BtnSelect;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox TbxTime;
-        private System.Windows.Forms.CheckBox CbxChange;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
