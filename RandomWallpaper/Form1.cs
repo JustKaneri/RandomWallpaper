@@ -24,14 +24,63 @@ namespace RandomWallpaper
         //Список изображений.
         private List<ImageBacground> BacgroundsArray = new List<ImageBacground>();
         private Manager manager;
-        
+        private History history;
+        private ManagetHistory managetHistory = new ManagetHistory();
+
+        /// <summary>
+        /// Загрузка формы.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            PropertiesManager managerProp = new PropertiesManager(this);
+            managerProp.SetUI();
+
+            string[] arg = Environment.GetCommandLineArgs();
+
+            if (arg.Length > 1)
+            {
+                TbxFolder.Text = arg[1];
+
+                if (arg[2].Trim() == "fon")
+                {
+                    this.Hide();
+                    this.ShowInTaskbar = false;
+                    WindowState = FormWindowState.Minimized;
+                    GetFiles();
+                    BtnSelectAndSet_Click(null, null);
+                }
+
+            }
+
+            manager = new Manager(this);
+            history = managetHistory.GetHistory();
+
+            FillCmb();
+
+            using (var reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"))
+            {
+                if (reg.GetValue(Application.ProductName) != null)
+                {
+                    int index = history.GetAutoFolder(reg.GetValue(Application.ProductName).ToString().Split(' ')[1]);
+
+                    if (index > -1)
+                        TbxFolder.SelectedIndex = index;
+
+                    GetFiles();
+                }
+
+            }
+        }
+
         private void BtnFindFolder_Click(object sender, EventArgs e)
         {
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
-                TbxFolder.Text = folderBrowserDialog1.SelectedPath;
+                history.AddFolder(folderBrowserDialog1.SelectedPath);
+                FillCmb();
                 GetFiles();
-                
             }
         }
 
@@ -67,12 +116,13 @@ namespace RandomWallpaper
             if (BacgroundsArray.Count == 0)
             {
                 MessageBox.Show("Изображения не найдены", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                PbxLast.Image = null;
-                TbxFolder.Text = "";
+                history.PathsFolder.RemoveAt(history.PathsFolder.Count - 1);
+                FillCmb();
                 return;
             }
             else
             {
+                managetHistory.SaveHisory(history);
                 manager.GetNewImage(BacgroundsArray);
             }
         }
@@ -85,9 +135,17 @@ namespace RandomWallpaper
                 return;
             }
 
-            manager.GetNewImage(BacgroundsArray);
-            manager.SetImage();
-            manager.SetImageOnWallpaper();
+            try
+            {
+
+                manager.GetNewImage(BacgroundsArray);
+                manager.SetImage();
+                manager.SetImageOnWallpaper();
+                manager.GetNewImage(BacgroundsArray);
+            }
+            catch 
+            {
+            }
         }  
 
         /// <summary>
@@ -122,59 +180,22 @@ namespace RandomWallpaper
             notifyIcon1.ShowBalloonTip(4);
 
         }
-
-        /// <summary>
-        /// Загрузка формы.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Form1_Load(object sender, EventArgs e)
+        
+        private void FillCmb()
         {
-            PropertiesManager managerProp = new PropertiesManager(this);
-            managerProp.SetUI();
+            TbxFolder.Items.Clear();
 
-            string[] arg = Environment.GetCommandLineArgs();
-
-            if (arg.Length > 1)
+            foreach (var item in history.PathsFolder)
             {
-                TbxFolder.Text = arg[1];
-
-                if (arg[2].Trim() == "fon")
-                {
-                    this.Hide();
-                    this.ShowInTaskbar = false;
-                    WindowState = FormWindowState.Minimized;
-                    GetFiles();
-                    BtnSelectAndSet_Click(null, null);
-                }
-
+                TbxFolder.Items.Add(item);
             }
 
-            manager = new Manager(this);
+            TbxFolder.SelectedIndex = TbxFolder.Items.Count - 1;
 
-            using (var reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"))
-            {
-                if(reg.GetValue(Application.ProductName) != null)
-                {
-                    TbxFolder.Text = reg.GetValue(Application.ProductName).ToString().Split(' ')[1];
-                    
-                    GetFiles();
-                }
-                
-            }
+            if (history.PathsFolder.Count > 0)
+                GetFiles();
         }
-
-        ///// <summary>
-        ///// Блокировка автозагруки если путь не указан.
-        ///// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
-        //private void TbxFolder_TextChanged(object sender, EventArgs e)
-        //{
-        //    CbxAutoLoad.Enabled = TbxFolder.Text != String.Empty;
-        //    CbxChange.Enabled = TbxFolder.Text != String.Empty;
-        //}
-
+        
         private void Form1_Resize(object sender, EventArgs e)
         {
             if(WindowState == FormWindowState.Minimized)
@@ -231,22 +252,8 @@ namespace RandomWallpaper
         //        timer1.Enabled = false;
         //    }
         //}
-
-        private void TbxTime_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!Char.IsDigit(e.KeyChar))
-                e.Handled = true;
-
-            if ((Keys)e.KeyChar == Keys.Back)
-                e.Handled = false;
-        }
-
-        //private void TbxTime_TextChanged(object sender, EventArgs e)
-        //{
-        //    if (TbxTime.Text.Equals("0"))
-        //        TbxTime.Text = "5";
-        //}
-
+        
+        
         private void PbxLast_Click(object sender, EventArgs e)
         {
             try
@@ -277,6 +284,11 @@ namespace RandomWallpaper
 
             PropertiesManager managerProp = new PropertiesManager(this);
             managerProp.SetUI();
+        }
+
+        private void TbxFolder_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GetFiles();
         }
     }
 }

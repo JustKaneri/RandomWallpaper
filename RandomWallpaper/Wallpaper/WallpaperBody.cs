@@ -15,7 +15,10 @@ namespace RandomWallpaper
 
         protected virtual void ResizeImage()
         {
-            _Image = new Bitmap(tmp, 300, 191);
+            if (tmp.Width > 300 && tmp.Height > 191)
+                _Image = new Bitmap(tmp, 300, 191);
+            else
+                _Image = new Bitmap(tmp);
 
             tmp.Dispose();
         }

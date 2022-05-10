@@ -94,6 +94,10 @@ namespace RandomWallpaper
         {
             PropertiesManager manager = new PropertiesManager(this);
             var cfg = manager.GetConfigurat();
+
+            if (cfg == null)
+                return;
+
             BtnSave.BackColor = cfg.BackColorButton;
             BtnSave.ForeColor = cfg.FontColorButton;
 

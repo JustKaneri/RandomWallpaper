@@ -226,6 +226,7 @@
             this.TbxFolder.Name = "TbxFolder";
             this.TbxFolder.Size = new System.Drawing.Size(1095, 34);
             this.TbxFolder.TabIndex = 18;
+            this.TbxFolder.SelectedIndexChanged += new System.EventHandler(this.TbxFolder_SelectedIndexChanged);
             // 
             // LbxProperties
             // 

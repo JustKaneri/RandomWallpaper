@@ -15,10 +15,6 @@ namespace RandomWallpaper
 
             ResizeImage();
         }
-
-        public Image GetImage()
-        {
-            return _Image;
-        }
+        
     }
 }

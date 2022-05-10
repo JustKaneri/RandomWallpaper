@@ -18,7 +18,7 @@ namespace RandomWallpaper
 
         public void AddFolder(string value)
         {
-            if (PathsFolder.IndexOf(value) > 0)
+            if (PathsFolder.IndexOf(value) > -1)
                 return;
 
             PathsFolder.Add(value);
