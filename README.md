@@ -16,3 +16,6 @@
 
 ![MainImage](MainForm.png)
 
+Приложение возможность кастомизации
+![Properties](Prop.jpg)
+
