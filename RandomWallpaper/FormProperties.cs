@@ -93,11 +93,17 @@ namespace RandomWallpaper
         {
             PaintUI();
 
+            PainIndicaterColor();
+
+            CbxAutoLoad.Checked = propertiesManager.IsAutoLoad();
+        }
+
+        private void PainIndicaterColor()
+        {
+
             PbxColorBack.BackColor = BtnTest.BackColor;
             PbxColorFont.BackColor = BtnTest.ForeColor;
             PbxBorderColor.BackColor = controlBox1.BorderColor;
-
-            CbxAutoLoad.Checked = propertiesManager.IsAutoLoad();
         }
         
         private void PaintUI()
@@ -120,6 +126,8 @@ namespace RandomWallpaper
             BtnDelHistory.ForeColor = cfg.FontColorButton;
 
             controlBox1.BorderColor = cfg.BorderColorButton;
+
+            PainIndicaterColor();
             
             this.Opacity = 0.9;
             this.Opacity = 1;
