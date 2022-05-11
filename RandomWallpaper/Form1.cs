@@ -20,12 +20,12 @@ namespace RandomWallpaper
         {
             InitializeComponent();
         }
-
-        //Список изображений.
+        
         private List<ImageBacground> BacgroundsArray = new List<ImageBacground>();
-        private Manager manager;
+        private Manager WallpaperManager;
         private History history;
         private ManagetHistory managetHistory = new ManagetHistory();
+        private PropertiesManager managerProperties;
 
         /// <summary>
         /// Загрузка формы.
@@ -34,10 +34,9 @@ namespace RandomWallpaper
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
-            PropertiesManager managerProp = new PropertiesManager(this);
-            managerProp.SetUI();
-
-            manager = new Manager(this);
+            managerProperties = new PropertiesManager(this);
+            managerProperties.SetUI();
+            WallpaperManager = new Manager(this);
             history = managetHistory.GetHistory();
             FillCmb();
 
@@ -65,7 +64,11 @@ namespace RandomWallpaper
                 }
 
             }
-           
+
+            int time = managerProperties.GetTime();
+            if (time > -1)
+                Start(time);
+
             //using (var reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"))
             //{
             //    if (reg.GetValue(Application.ProductName) != null)
@@ -79,6 +82,17 @@ namespace RandomWallpaper
             //    }
 
             //}
+        }
+
+        private void Stop()
+        {
+            timer1.Enabled = false;
+        }
+
+        private void Start(int time)
+        {
+            timer1.Interval = int.Parse(time.ToString()) * 60000;
+            timer1.Enabled = true;
         }
 
         private void BtnFindFolder_Click(object sender, EventArgs e)
@@ -138,7 +152,7 @@ namespace RandomWallpaper
             else
             {
                 managetHistory.SaveHisory(history);
-                manager.GetNewImage(BacgroundsArray);
+                WallpaperManager.GetNewImage(BacgroundsArray);
             }
         }
         
@@ -153,10 +167,10 @@ namespace RandomWallpaper
             try
             {
 
-                manager.GetNewImage(BacgroundsArray);
-                manager.SetImage();
-                manager.SetImageOnWallpaper();
-                manager.GetNewImage(BacgroundsArray);
+                WallpaperManager.GetNewImage(BacgroundsArray);
+                WallpaperManager.SetImage();
+                WallpaperManager.SetImageOnWallpaper();
+                WallpaperManager.GetNewImage(BacgroundsArray);
             }
             catch 
             {
@@ -175,9 +189,9 @@ namespace RandomWallpaper
 
             try
             {
-                manager.SetImage();
-                manager.SetImageOnWallpaper();
-                manager.GetNewImage(BacgroundsArray);
+                WallpaperManager.SetImage();
+                WallpaperManager.SetImageOnWallpaper();
+                WallpaperManager.GetNewImage(BacgroundsArray);
             }
             catch 
             {
@@ -249,33 +263,19 @@ namespace RandomWallpaper
                 return;
             }
 
-            manager.GetNewImage(BacgroundsArray);
+            WallpaperManager.GetNewImage(BacgroundsArray);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            BtnSelectAndSet_Click(null, null);
+            BtnSet_Click(null, null);
         }
-
-        //private void CbxChange_CheckedChanged(object sender, EventArgs e)
-        //{
-        //    if(CbxChange.Checked)
-        //    {
-        //        timer1.Interval = int.Parse(TbxTime.Text) * 60000;
-        //        timer1.Enabled = true;
-        //    } 
-        //    else
-        //    {
-        //        timer1.Enabled = false;
-        //    }
-        //}
-        
         
         private void PbxLast_Click(object sender, EventArgs e)
         {
             try
             {
-                manager.SetLastWallpaper();
+                WallpaperManager.SetLastWallpaper();
             }
             catch
             {
@@ -291,7 +291,7 @@ namespace RandomWallpaper
                 return;
             }
 
-            manager.GetNewImage(BacgroundsArray);
+            WallpaperManager.GetNewImage(BacgroundsArray);
         }
 
         private void LbxProperties_Click(object sender, EventArgs e)
@@ -299,13 +299,29 @@ namespace RandomWallpaper
             FormProperties properties = new FormProperties(TbxFolder.Text);
             properties.ShowDialog();
 
-            PropertiesManager managerProp = new PropertiesManager(this);
-            managerProp.SetUI();
+            managerProperties = new PropertiesManager(this);
+            managerProperties.SetUI();
 
+            if(properties.IsDelete)
+            {
+                history = managetHistory.GetHistory();
+                FillCmb();
+                GetFiles();
+            }
+
+            if(properties.IsUpdateWallp)
+            {
+                int time = managerProperties.GetTime();
+                if (time > -1)
+                    Start(time);
+                else
+                    Stop();
+            }
+            else
+            {
+                Stop();
+            }
             
-            history = managetHistory.GetHistory();
-            FillCmb();
-            GetFiles();
         }
 
         private void TbxFolder_SelectedIndexChanged(object sender, EventArgs e)

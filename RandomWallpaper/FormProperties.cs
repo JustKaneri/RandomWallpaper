@@ -13,18 +13,31 @@ namespace RandomWallpaper
     public partial class FormProperties : Form
     {
         private string Path;
+        private PropertiesManager propertiesManager;
+        public bool IsDelete = false;
+        public bool IsUpdateWallp = false;
 
         public FormProperties(string path)
         {
             InitializeComponent();
 
             Path = path;
+
+            propertiesManager = new PropertiesManager(this);
+
+            int tm = propertiesManager.GetTime();
+
+            if(tm>-1)
+            {
+                TbxTime.Text = tm.ToString();
+                CbxChange.Checked = true;
+            }
         }
 
+        #region Переключения по вкладкам
         private void BtnSelect_Click(object sender, EventArgs e)
         {
             TabPanel.SelectedIndex = 0;
-
         }
 
         private void BtnUI_Click(object sender, EventArgs e)
@@ -36,6 +49,7 @@ namespace RandomWallpaper
         {
             TabPanel.SelectedIndex = 2;
         }
+        #endregion
 
         private void PbxColorBack_Click(object sender, EventArgs e)
         {
@@ -61,7 +75,6 @@ namespace RandomWallpaper
             {
                 controlBox1.BorderColor = colorDialog1.Color;
                 PbxBorderColor.BackColor = colorDialog1.Color;
-               
             }
         }
 
@@ -72,8 +85,7 @@ namespace RandomWallpaper
             configurat.FontColorButton = BtnTest.ForeColor;
             configurat.BorderColorButton = controlBox1.BorderColor;
 
-            PropertiesManager manager = new PropertiesManager(this);
-            manager.SaveUI(configurat);
+            propertiesManager.SaveUI(configurat);
             PaintUI();
         }
 
@@ -85,15 +97,12 @@ namespace RandomWallpaper
             PbxColorFont.BackColor = BtnTest.ForeColor;
             PbxBorderColor.BackColor = controlBox1.BorderColor;
 
-            PropertiesManager manager = new PropertiesManager(this);
-
-            CbxAutoLoad.Checked = manager.IsAutoLoad();
+            CbxAutoLoad.Checked = propertiesManager.IsAutoLoad();
         }
         
         private void PaintUI()
         {
-            PropertiesManager manager = new PropertiesManager(this);
-            var cfg = manager.GetConfigurat();
+            var cfg = propertiesManager.GetConfigurat();
 
             if (cfg == null)
                 return;
@@ -118,8 +127,7 @@ namespace RandomWallpaper
 
         private void BtnDef_Click(object sender, EventArgs e)
         {
-            PropertiesManager manager = new PropertiesManager(this);
-            manager.DefaultProperties();
+            propertiesManager.DefaultProperties();
             PaintUI();
         }
 
@@ -136,25 +144,28 @@ namespace RandomWallpaper
         {
             if (TbxTime.Text.Equals("0"))
                 TbxTime.Text = "5";
+
+            CbxChange_CheckedChanged(null,null);
         }
 
         private void CbxAutoLoad_CheckedChanged(object sender, EventArgs e)
         {
-            PropertiesManager manager = new PropertiesManager(this);
+            
 
             if (CbxAutoLoad.Checked)
             {
                 if(string.IsNullOrWhiteSpace(Path))
                 {
                     MessageBox.Show("Для того что бы установить автозагрузку, нужно выбрать папку с обоями в главном окне.", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    CbxAutoLoad.Checked = false;
                     return;
                 }
-                
-                manager.SetAutoLoadApp(Path);
+
+                propertiesManager.SetAutoLoadApp(Path);
             }
             else
             {
-                manager.DisAutoLoadApp();
+                propertiesManager.DisAutoLoadApp();
             }
         }
 
@@ -164,7 +175,34 @@ namespace RandomWallpaper
             bool del = managetHistory.DeleteHistory();
 
             if (del)
-                MessageBox.Show("История удалена", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            {
+                MessageBox.Show("История удалена", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                IsDelete = del;
+            }
+            
+
+        }
+
+        private void CbxChange_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CbxChange.Checked)
+            {
+                if (string.IsNullOrWhiteSpace(Path))
+                {
+                    MessageBox.Show("Для того что бы начать автоматическую смену обоев, нужно выбрать папку с обоями в главном окне.", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    CbxChange.Checked = false;
+                    return;
+                }
+
+                propertiesManager.StartUpdate(int.Parse(TbxTime.Text));
+
+                IsUpdateWallp = true;
+            }
+            else
+            {
+                propertiesManager.StopUpdate();
+                IsUpdateWallp = false;
+            }
         }
     }
 }

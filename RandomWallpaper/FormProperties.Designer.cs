@@ -53,6 +53,7 @@
             this.BtnSave = new System.Windows.Forms.Button();
             this.TblTotalPage = new System.Windows.Forms.TabPage();
             this.GpProperties = new System.Windows.Forms.GroupBox();
+            this.BtnDelHistory = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.TbxTime = new System.Windows.Forms.TextBox();
             this.CbxChange = new System.Windows.Forms.CheckBox();
@@ -62,7 +63,6 @@
             this.button1 = new System.Windows.Forms.Button();
             this.BtnSelect = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.BtnDelHistory = new System.Windows.Forms.Button();
             this.TabPanel.SuspendLayout();
             this.TbInfoPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -381,6 +381,20 @@
             this.GpProperties.TabStop = false;
             this.GpProperties.Text = "Доп параметры";
             // 
+            // BtnDelHistory
+            // 
+            this.BtnDelHistory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(53)))), ((int)(((byte)(96)))));
+            this.BtnDelHistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnDelHistory.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.BtnDelHistory.ForeColor = System.Drawing.Color.White;
+            this.BtnDelHistory.Location = new System.Drawing.Point(6, 118);
+            this.BtnDelHistory.Name = "BtnDelHistory";
+            this.BtnDelHistory.Size = new System.Drawing.Size(401, 40);
+            this.BtnDelHistory.TabIndex = 15;
+            this.BtnDelHistory.Text = "Очистить историю папок";
+            this.BtnDelHistory.UseVisualStyleBackColor = false;
+            this.BtnDelHistory.Click += new System.EventHandler(this.BtnDelHistory_Click);
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -415,6 +429,7 @@
             this.CbxChange.TabIndex = 1;
             this.CbxChange.Text = "Менять обои каждые ";
             this.CbxChange.UseVisualStyleBackColor = true;
+            this.CbxChange.CheckedChanged += new System.EventHandler(this.CbxChange_CheckedChanged);
             // 
             // CbxAutoLoad
             // 
@@ -488,20 +503,6 @@
             this.BtnSelect.Text = "О программе";
             this.BtnSelect.UseVisualStyleBackColor = false;
             this.BtnSelect.Click += new System.EventHandler(this.BtnSelect_Click);
-            // 
-            // BtnDelHistory
-            // 
-            this.BtnDelHistory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(53)))), ((int)(((byte)(96)))));
-            this.BtnDelHistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnDelHistory.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.BtnDelHistory.ForeColor = System.Drawing.Color.White;
-            this.BtnDelHistory.Location = new System.Drawing.Point(6, 118);
-            this.BtnDelHistory.Name = "BtnDelHistory";
-            this.BtnDelHistory.Size = new System.Drawing.Size(401, 40);
-            this.BtnDelHistory.TabIndex = 15;
-            this.BtnDelHistory.Text = "Очистить историю папок";
-            this.BtnDelHistory.UseVisualStyleBackColor = false;
-            this.BtnDelHistory.Click += new System.EventHandler(this.BtnDelHistory_Click);
             // 
             // FormProperties
             // 

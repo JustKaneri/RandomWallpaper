@@ -16,6 +16,9 @@ namespace RandomWallpaper
     {
         private Form Self;
 
+        public EventHandler StartUpdating;
+        public EventHandler StopUpdating;
+
         public PropertiesManager(Form form)
         {
             Self = form;
@@ -77,18 +80,18 @@ namespace RandomWallpaper
         {
             BinaryFormatter bf = new BinaryFormatter();
 
-            using (FileStream fs = new FileStream(Application.StartupPath+"\\configUI.dat",FileMode.OpenOrCreate))
+            using (FileStream fs = new FileStream(Application.StartupPath + "\\configUI.dat", FileMode.OpenOrCreate))
             {
-                bf.Serialize(fs,config);
+                bf.Serialize(fs, config);
             }
         }
 
         public void DefaultProperties()
         {
             Configurat conf = new Configurat();
-            conf.BackColorButton = Color.FromArgb(80,53,96);
+            conf.BackColorButton = Color.FromArgb(80, 53, 96);
             conf.FontColorButton = Color.White;
-            conf.BorderColorButton = Color.FromArgb(64,0,64);
+            conf.BorderColorButton = Color.FromArgb(64, 0, 64);
 
             SaveUI(conf);
         }
@@ -127,5 +130,35 @@ namespace RandomWallpaper
                 reg.SetValue(Application.ProductName, Exect);
             }
         }
+
+        public void StartUpdate(int v)
+        {
+            using (StreamWriter sw = new StreamWriter(Application.StartupPath + "\\timer.dat"))
+            {
+                sw.WriteLine(v);
+            }
+        }
+
+        public void StopUpdate()
+        {
+            if (File.Exists(Application.StartupPath + "\\timer.dat"))
+                File.Delete(Application.StartupPath + "\\timer.dat");
+        }
+
+        public int GetTime()
+        {
+            int tm = -1;
+
+            if (!File.Exists(Application.StartupPath + "\\timer.dat"))
+                return tm;
+
+            using (StreamReader sr = new StreamReader(Application.StartupPath + "\\timer.dat"))
+            {
+                tm = int.Parse(sr.ReadLine());
+            }
+
+            return tm;
+        }
+       
     }
 }
