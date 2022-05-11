@@ -96,6 +96,14 @@ namespace RandomWallpaper
         /// </summary>
         private void GetFiles()
         {
+            if(string.IsNullOrWhiteSpace(TbxFolder.Text))
+            {
+                BacgroundsArray.Clear();
+                PbxRandom.Image = null;
+                return;
+            }
+            
+
             try
             {
                 string[] file = Directory.GetFiles(TbxFolder.Text);
@@ -191,6 +199,8 @@ namespace RandomWallpaper
         private void FillCmb()
         {
             TbxFolder.Items.Clear();
+            TbxFolder.DropDownHeight = TbxFolder.ItemHeight;
+
 
             foreach (var item in history.PathsFolder)
             {
@@ -291,6 +301,11 @@ namespace RandomWallpaper
 
             PropertiesManager managerProp = new PropertiesManager(this);
             managerProp.SetUI();
+
+            
+            history = managetHistory.GetHistory();
+            FillCmb();
+            GetFiles();
         }
 
         private void TbxFolder_SelectedIndexChanged(object sender, EventArgs e)
