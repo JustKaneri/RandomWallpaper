@@ -37,6 +37,10 @@ namespace RandomWallpaper
             PropertiesManager managerProp = new PropertiesManager(this);
             managerProp.SetUI();
 
+            manager = new Manager(this);
+            history = managetHistory.GetHistory();
+            FillCmb();
+
             string[] arg = Environment.GetCommandLineArgs();
 
             if (arg.Length > 1)
@@ -48,30 +52,27 @@ namespace RandomWallpaper
                     this.Hide();
                     this.ShowInTaskbar = false;
                     WindowState = FormWindowState.Minimized;
+                    TbxFolder.SelectedIndex = history.GetAutoFolder(arg[1]);
                     GetFiles();
                     BtnSelectAndSet_Click(null, null);
                 }
 
             }
+            
+           
+            //using (var reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"))
+            //{
+            //    if (reg.GetValue(Application.ProductName) != null)
+            //    {
+            //        int index = history.GetAutoFolder(reg.GetValue(Application.ProductName).ToString().Split(' ')[1]);
 
-            manager = new Manager(this);
-            history = managetHistory.GetHistory();
+            //        if (index > -1)
+            //            TbxFolder.SelectedIndex = index;
 
-            FillCmb();
+            //        GetFiles();
+            //    }
 
-            using (var reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"))
-            {
-                if (reg.GetValue(Application.ProductName) != null)
-                {
-                    int index = history.GetAutoFolder(reg.GetValue(Application.ProductName).ToString().Split(' ')[1]);
-
-                    if (index > -1)
-                        TbxFolder.SelectedIndex = index;
-
-                    GetFiles();
-                }
-
-            }
+            //}
         }
 
         private void BtnFindFolder_Click(object sender, EventArgs e)

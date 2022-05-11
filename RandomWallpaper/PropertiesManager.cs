@@ -120,7 +120,7 @@ namespace RandomWallpaper
 
         public void SetAutoLoadApp(string path)
         {
-            string Exect = $"\"{Application.ExecutablePath}\" {path} fon";
+            string Exect = $"\"{Application.ExecutablePath}\" \"{path}\" fon";
 
             using (var reg = Registry.CurrentUser.CreateSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run\\"))
             {
