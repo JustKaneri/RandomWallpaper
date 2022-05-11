@@ -107,6 +107,9 @@ namespace RandomWallpaper
             BtnTest.BackColor = cfg.BackColorButton;
             BtnTest.ForeColor = cfg.FontColorButton;
 
+            BtnDelHistory.BackColor = cfg.BackColorButton;
+            BtnDelHistory.ForeColor = cfg.FontColorButton;
+
             controlBox1.BorderColor = cfg.BorderColorButton;
             
             this.Opacity = 0.9;

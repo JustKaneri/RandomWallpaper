@@ -53,7 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configurat.cs" />
+    <Compile Include="PropertiesControl\Configurat.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,10 +66,10 @@
     <Compile Include="FormProperties.Designer.cs">
       <DependentUpon>FormProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="History.cs" />
+    <Compile Include="HistoryControl\History.cs" />
     <Compile Include="ImageBacground.cs" />
-    <Compile Include="ManagetHistory.cs" />
-    <Compile Include="PropertiesManager.cs" />
+    <Compile Include="HistoryControl\ManagetHistory.cs" />
+    <Compile Include="PropertiesControl\PropertiesManager.cs" />
     <Compile Include="Wallpaper\LastWallpaper.cs" />
     <Compile Include="Wallpaper\Manager.cs" />
     <Compile Include="Wallpaper\NowWallpaper.cs" />
