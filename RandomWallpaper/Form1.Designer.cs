@@ -32,6 +32,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.controlBox1 = new CustomUIDll.ControlBox();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.CntLastWallpaper = new System.Windows.Forms.ToolStripMenuItem();
+            this.CntNewWallpaper = new System.Windows.Forms.ToolStripMenuItem();
+            this.CntQuit = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.BtnFindFolder = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
@@ -47,14 +51,11 @@
             this.PbxRandom = new System.Windows.Forms.PictureBox();
             this.TbxFolder = new System.Windows.Forms.ComboBox();
             this.LbxProperties = new System.Windows.Forms.Label();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.CntLastWallpaper = new System.Windows.Forms.ToolStripMenuItem();
-            this.CntNewWallpaper = new System.Windows.Forms.ToolStripMenuItem();
-            this.CntQuit = new System.Windows.Forms.ToolStripMenuItem();
+            this.LbxHelp = new System.Windows.Forms.Label();
+            this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PbxLast)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxNow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxRandom)).BeginInit();
-            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // controlBox1
@@ -93,6 +94,40 @@
             this.notifyIcon1.Text = "Random Wallpapers";
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CntLastWallpaper,
+            this.CntNewWallpaper,
+            this.CntQuit});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(208, 94);
+            // 
+            // CntLastWallpaper
+            // 
+            this.CntLastWallpaper.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.CntLastWallpaper.Name = "CntLastWallpaper";
+            this.CntLastWallpaper.Size = new System.Drawing.Size(207, 30);
+            this.CntLastWallpaper.Text = "Старые обои";
+            this.CntLastWallpaper.Click += new System.EventHandler(this.PbxLast_Click);
+            // 
+            // CntNewWallpaper
+            // 
+            this.CntNewWallpaper.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.CntNewWallpaper.Name = "CntNewWallpaper";
+            this.CntNewWallpaper.Size = new System.Drawing.Size(207, 30);
+            this.CntNewWallpaper.Text = "Новые обои";
+            this.CntNewWallpaper.Click += new System.EventHandler(this.BtnSelectAndSet_Click);
+            // 
+            // CntQuit
+            // 
+            this.CntQuit.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.CntQuit.Name = "CntQuit";
+            this.CntQuit.Size = new System.Drawing.Size(207, 30);
+            this.CntQuit.Text = "Выйти";
+            this.CntQuit.Click += new System.EventHandler(this.CntQuit_Click);
             // 
             // label1
             // 
@@ -246,45 +281,24 @@
             this.LbxProperties.Text = "Настройки";
             this.LbxProperties.Click += new System.EventHandler(this.LbxProperties_Click);
             // 
-            // contextMenuStrip1
+            // LbxHelp
             // 
-            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CntLastWallpaper,
-            this.CntNewWallpaper,
-            this.CntQuit});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(211, 122);
-            // 
-            // CntLastWallpaper
-            // 
-            this.CntLastWallpaper.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.CntLastWallpaper.Name = "CntLastWallpaper";
-            this.CntLastWallpaper.Size = new System.Drawing.Size(210, 30);
-            this.CntLastWallpaper.Text = "Старые обои";
-            this.CntLastWallpaper.Click += new System.EventHandler(this.PbxLast_Click);
-            // 
-            // CntNewWallpaper
-            // 
-            this.CntNewWallpaper.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.CntNewWallpaper.Name = "CntNewWallpaper";
-            this.CntNewWallpaper.Size = new System.Drawing.Size(210, 30);
-            this.CntNewWallpaper.Text = "Новые обои";
-            this.CntNewWallpaper.Click += new System.EventHandler(this.BtnSelectAndSet_Click);
-            // 
-            // CntQuit
-            // 
-            this.CntQuit.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.CntQuit.Name = "CntQuit";
-            this.CntQuit.Size = new System.Drawing.Size(210, 30);
-            this.CntQuit.Text = "Выйти";
-            this.CntQuit.Click += new System.EventHandler(this.CntQuit_Click);
+            this.LbxHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.LbxHelp.AutoSize = true;
+            this.LbxHelp.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.LbxHelp.Location = new System.Drawing.Point(1212, 557);
+            this.LbxHelp.Name = "LbxHelp";
+            this.LbxHelp.Size = new System.Drawing.Size(88, 26);
+            this.LbxHelp.TabIndex = 20;
+            this.LbxHelp.Text = "Помощь";
+            this.LbxHelp.Click += new System.EventHandler(this.LbxHelp_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1312, 592);
+            this.Controls.Add(this.LbxHelp);
             this.Controls.Add(this.LbxProperties);
             this.Controls.Add(this.TbxFolder);
             this.Controls.Add(this.label5);
@@ -307,10 +321,10 @@
             this.Text = "Random Wallpapers";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Resize += new System.EventHandler(this.Form1_Resize);
+            this.contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PbxLast)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxNow)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxRandom)).EndInit();
-            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -339,6 +353,7 @@
         private System.Windows.Forms.ToolStripMenuItem CntLastWallpaper;
         private System.Windows.Forms.ToolStripMenuItem CntNewWallpaper;
         private System.Windows.Forms.ToolStripMenuItem CntQuit;
+        private System.Windows.Forms.Label LbxHelp;
     }
 }
 

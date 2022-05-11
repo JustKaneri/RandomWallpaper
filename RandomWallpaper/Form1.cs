@@ -327,5 +327,16 @@ namespace RandomWallpaper
         {
             this.Close();
         }
+
+        private void LbxHelp_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(Application.StartupPath + "\\help.chm");
+            }
+            catch
+            {
+            }
+        }
     }
 }
