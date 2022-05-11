@@ -37,5 +37,22 @@ namespace RandomWallpaper
 
             return his;
         }
+
+        public bool DeleteHistory()
+        {
+            if (!File.Exists(Application.StartupPath + "\\history.dat"))
+                return false;
+
+            try
+            {
+                File.Delete(Application.StartupPath + "\\history.dat");
+            }
+            catch 
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

@@ -52,13 +52,19 @@ namespace RandomWallpaper
                     this.Hide();
                     this.ShowInTaskbar = false;
                     WindowState = FormWindowState.Minimized;
+
+                    if (TbxFolder.Items.Count == 0)
+                    {
+                        history.AddFolder(arg[1]);
+                        FillCmb();
+                    }
+
                     TbxFolder.SelectedIndex = history.GetAutoFolder(arg[1]);
                     GetFiles();
                     BtnSelectAndSet_Click(null, null);
                 }
 
             }
-            
            
             //using (var reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"))
             //{

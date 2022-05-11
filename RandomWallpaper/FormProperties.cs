@@ -154,5 +154,14 @@ namespace RandomWallpaper
                 manager.DisAutoLoadApp();
             }
         }
+
+        private void BtnDelHistory_Click(object sender, EventArgs e)
+        {
+            ManagetHistory managetHistory = new ManagetHistory();
+            bool del = managetHistory.DeleteHistory();
+
+            if (del)
+                MessageBox.Show("История удалена", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
     }
 }

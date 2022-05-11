@@ -52,16 +52,17 @@
             this.PbxColorBack = new System.Windows.Forms.PictureBox();
             this.BtnSave = new System.Windows.Forms.Button();
             this.TblTotalPage = new System.Windows.Forms.TabPage();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.BtnSelect = new System.Windows.Forms.Button();
-            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.GpProperties = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.TbxTime = new System.Windows.Forms.TextBox();
             this.CbxChange = new System.Windows.Forms.CheckBox();
             this.CbxAutoLoad = new System.Windows.Forms.CheckBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.BtnSelect = new System.Windows.Forms.Button();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.BtnDelHistory = new System.Windows.Forms.Button();
             this.TabPanel.SuspendLayout();
             this.TbInfoPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -72,8 +73,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.PbxColorFont)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxColorBack)).BeginInit();
             this.TblTotalPage.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.GpProperties.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // controlBox1
@@ -365,6 +366,67 @@
             this.TblTotalPage.TabIndex = 2;
             this.TblTotalPage.Text = "tabPage3";
             // 
+            // GpProperties
+            // 
+            this.GpProperties.Controls.Add(this.BtnDelHistory);
+            this.GpProperties.Controls.Add(this.label7);
+            this.GpProperties.Controls.Add(this.TbxTime);
+            this.GpProperties.Controls.Add(this.CbxChange);
+            this.GpProperties.Controls.Add(this.CbxAutoLoad);
+            this.GpProperties.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.GpProperties.Location = new System.Drawing.Point(6, 15);
+            this.GpProperties.Name = "GpProperties";
+            this.GpProperties.Size = new System.Drawing.Size(528, 180);
+            this.GpProperties.TabIndex = 13;
+            this.GpProperties.TabStop = false;
+            this.GpProperties.Text = "Доп параметры";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label7.Location = new System.Drawing.Point(340, 74);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(67, 26);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "минут";
+            // 
+            // TbxTime
+            // 
+            this.TbxTime.BackColor = System.Drawing.Color.White;
+            this.TbxTime.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TbxTime.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.TbxTime.Location = new System.Drawing.Point(236, 72);
+            this.TbxTime.MaxLength = 3;
+            this.TbxTime.Name = "TbxTime";
+            this.TbxTime.Size = new System.Drawing.Size(98, 31);
+            this.TbxTime.TabIndex = 14;
+            this.TbxTime.Text = "5";
+            this.TbxTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.TbxTime.TextChanged += new System.EventHandler(this.TbxTime_TextChanged);
+            this.TbxTime.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TbxTime_KeyPress);
+            // 
+            // CbxChange
+            // 
+            this.CbxChange.AutoSize = true;
+            this.CbxChange.Location = new System.Drawing.Point(6, 73);
+            this.CbxChange.Name = "CbxChange";
+            this.CbxChange.Size = new System.Drawing.Size(234, 30);
+            this.CbxChange.TabIndex = 1;
+            this.CbxChange.Text = "Менять обои каждые ";
+            this.CbxChange.UseVisualStyleBackColor = true;
+            // 
+            // CbxAutoLoad
+            // 
+            this.CbxAutoLoad.AutoSize = true;
+            this.CbxAutoLoad.Location = new System.Drawing.Point(6, 37);
+            this.CbxAutoLoad.Name = "CbxAutoLoad";
+            this.CbxAutoLoad.Size = new System.Drawing.Size(361, 30);
+            this.CbxAutoLoad.TabIndex = 0;
+            this.CbxAutoLoad.Text = "Смена обоев при загрузке Windows";
+            this.CbxAutoLoad.UseVisualStyleBackColor = true;
+            this.CbxAutoLoad.CheckedChanged += new System.EventHandler(this.CbxAutoLoad_CheckedChanged);
+            // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -427,65 +489,19 @@
             this.BtnSelect.UseVisualStyleBackColor = false;
             this.BtnSelect.Click += new System.EventHandler(this.BtnSelect_Click);
             // 
-            // GpProperties
+            // BtnDelHistory
             // 
-            this.GpProperties.Controls.Add(this.label7);
-            this.GpProperties.Controls.Add(this.TbxTime);
-            this.GpProperties.Controls.Add(this.CbxChange);
-            this.GpProperties.Controls.Add(this.CbxAutoLoad);
-            this.GpProperties.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.GpProperties.Location = new System.Drawing.Point(6, 15);
-            this.GpProperties.Name = "GpProperties";
-            this.GpProperties.Size = new System.Drawing.Size(528, 117);
-            this.GpProperties.TabIndex = 13;
-            this.GpProperties.TabStop = false;
-            this.GpProperties.Text = "Доп параметры";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label7.Location = new System.Drawing.Point(340, 74);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(67, 26);
-            this.label7.TabIndex = 14;
-            this.label7.Text = "минут";
-            // 
-            // TbxTime
-            // 
-            this.TbxTime.BackColor = System.Drawing.Color.White;
-            this.TbxTime.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.TbxTime.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.TbxTime.Location = new System.Drawing.Point(236, 72);
-            this.TbxTime.MaxLength = 3;
-            this.TbxTime.Name = "TbxTime";
-            this.TbxTime.Size = new System.Drawing.Size(98, 31);
-            this.TbxTime.TabIndex = 14;
-            this.TbxTime.Text = "5";
-            this.TbxTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.TbxTime.TextChanged += new System.EventHandler(this.TbxTime_TextChanged);
-            this.TbxTime.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TbxTime_KeyPress);
-            // 
-            // CbxChange
-            // 
-            this.CbxChange.AutoSize = true;
-            this.CbxChange.Location = new System.Drawing.Point(6, 73);
-            this.CbxChange.Name = "CbxChange";
-            this.CbxChange.Size = new System.Drawing.Size(234, 30);
-            this.CbxChange.TabIndex = 1;
-            this.CbxChange.Text = "Менять обои каждые ";
-            this.CbxChange.UseVisualStyleBackColor = true;
-            // 
-            // CbxAutoLoad
-            // 
-            this.CbxAutoLoad.AutoSize = true;
-            this.CbxAutoLoad.Location = new System.Drawing.Point(6, 37);
-            this.CbxAutoLoad.Name = "CbxAutoLoad";
-            this.CbxAutoLoad.Size = new System.Drawing.Size(361, 30);
-            this.CbxAutoLoad.TabIndex = 0;
-            this.CbxAutoLoad.Text = "Смена обоев при загрузке Windows";
-            this.CbxAutoLoad.UseVisualStyleBackColor = true;
-            this.CbxAutoLoad.CheckedChanged += new System.EventHandler(this.CbxAutoLoad_CheckedChanged);
+            this.BtnDelHistory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(53)))), ((int)(((byte)(96)))));
+            this.BtnDelHistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnDelHistory.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.BtnDelHistory.ForeColor = System.Drawing.Color.White;
+            this.BtnDelHistory.Location = new System.Drawing.Point(6, 118);
+            this.BtnDelHistory.Name = "BtnDelHistory";
+            this.BtnDelHistory.Size = new System.Drawing.Size(401, 40);
+            this.BtnDelHistory.TabIndex = 15;
+            this.BtnDelHistory.Text = "Очистить историю папок";
+            this.BtnDelHistory.UseVisualStyleBackColor = false;
+            this.BtnDelHistory.Click += new System.EventHandler(this.BtnDelHistory_Click);
             // 
             // FormProperties
             // 
@@ -515,9 +531,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.PbxColorFont)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PbxColorBack)).EndInit();
             this.TblTotalPage.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
             this.GpProperties.ResumeLayout(false);
             this.GpProperties.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -557,5 +573,6 @@
         private System.Windows.Forms.TextBox TbxTime;
         private System.Windows.Forms.CheckBox CbxChange;
         private System.Windows.Forms.CheckBox CbxAutoLoad;
+        private System.Windows.Forms.Button BtnDelHistory;
     }
 }
