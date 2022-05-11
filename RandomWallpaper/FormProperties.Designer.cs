@@ -107,13 +107,16 @@
             // 
             // TabPanel
             // 
+            this.TabPanel.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
             this.TabPanel.Controls.Add(this.TbInfoPage);
             this.TabPanel.Controls.Add(this.TblUiPage);
             this.TabPanel.Controls.Add(this.TblTotalPage);
-            this.TabPanel.Location = new System.Drawing.Point(186, 48);
+            this.TabPanel.ItemSize = new System.Drawing.Size(1, 1);
+            this.TabPanel.Location = new System.Drawing.Point(186, 72);
             this.TabPanel.Name = "TabPanel";
             this.TabPanel.SelectedIndex = 0;
-            this.TabPanel.Size = new System.Drawing.Size(550, 383);
+            this.TabPanel.Size = new System.Drawing.Size(550, 358);
+            this.TabPanel.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.TabPanel.TabIndex = 2;
             // 
             // TbInfoPage
@@ -127,10 +130,10 @@
             this.TbInfoPage.Controls.Add(this.textBox1);
             this.TbInfoPage.Controls.Add(this.label1);
             this.TbInfoPage.Controls.Add(this.pictureBox1);
-            this.TbInfoPage.Location = new System.Drawing.Point(4, 27);
+            this.TbInfoPage.Location = new System.Drawing.Point(4, 5);
             this.TbInfoPage.Name = "TbInfoPage";
             this.TbInfoPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TbInfoPage.Size = new System.Drawing.Size(542, 352);
+            this.TbInfoPage.Size = new System.Drawing.Size(542, 349);
             this.TbInfoPage.TabIndex = 0;
             this.TbInfoPage.Text = "tabPage1";
             // 
@@ -138,6 +141,7 @@
             // 
             this.textBox3.BackColor = System.Drawing.SystemColors.Control;
             this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox3.Enabled = false;
             this.textBox3.Font = new System.Drawing.Font("Trebuchet MS", 10.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBox3.Location = new System.Drawing.Point(108, 290);
             this.textBox3.Multiline = true;
@@ -161,6 +165,7 @@
             // 
             this.textBox2.BackColor = System.Drawing.SystemColors.Control;
             this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox2.Enabled = false;
             this.textBox2.Font = new System.Drawing.Font("Trebuchet MS", 10.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBox2.Location = new System.Drawing.Point(108, 262);
             this.textBox2.Name = "textBox2";
@@ -183,6 +188,7 @@
             // 
             this.textBox1.BackColor = System.Drawing.SystemColors.Control;
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.Enabled = false;
             this.textBox1.Font = new System.Drawing.Font("Trebuchet MS", 10.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBox1.Location = new System.Drawing.Point(108, 230);
             this.textBox1.Name = "textBox1";
@@ -219,10 +225,10 @@
             this.TblUiPage.Controls.Add(this.groupBox2);
             this.TblUiPage.Controls.Add(this.groupBox1);
             this.TblUiPage.Controls.Add(this.BtnSave);
-            this.TblUiPage.Location = new System.Drawing.Point(4, 27);
+            this.TblUiPage.Location = new System.Drawing.Point(4, 5);
             this.TblUiPage.Name = "TblUiPage";
             this.TblUiPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TblUiPage.Size = new System.Drawing.Size(542, 352);
+            this.TblUiPage.Size = new System.Drawing.Size(542, 347);
             this.TblUiPage.TabIndex = 1;
             this.TblUiPage.Text = "tabPage2";
             // 
@@ -359,10 +365,10 @@
             this.TblTotalPage.BackColor = System.Drawing.SystemColors.Control;
             this.TblTotalPage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TblTotalPage.Controls.Add(this.GpProperties);
-            this.TblTotalPage.Location = new System.Drawing.Point(4, 27);
+            this.TblTotalPage.Location = new System.Drawing.Point(4, 5);
             this.TblTotalPage.Name = "TblTotalPage";
             this.TblTotalPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TblTotalPage.Size = new System.Drawing.Size(542, 352);
+            this.TblTotalPage.Size = new System.Drawing.Size(542, 347);
             this.TblTotalPage.TabIndex = 2;
             this.TblTotalPage.Text = "tabPage3";
             // 
