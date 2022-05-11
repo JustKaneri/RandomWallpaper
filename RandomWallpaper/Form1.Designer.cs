@@ -76,7 +76,7 @@
             this.controlBox1.MaxBox = false;
             this.controlBox1.MiniBox = true;
             this.controlBox1.Name = "controlBox1";
-            this.controlBox1.Size = new System.Drawing.Size(1381, 42);
+            this.controlBox1.Size = new System.Drawing.Size(1312, 42);
             this.controlBox1.TabIndex = 0;
             this.controlBox1.Text = "Random Wallpapers";
             // 
@@ -104,7 +104,7 @@
             this.BtnFindFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnFindFolder.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.BtnFindFolder.ForeColor = System.Drawing.Color.White;
-            this.BtnFindFolder.Location = new System.Drawing.Point(1239, 54);
+            this.BtnFindFolder.Location = new System.Drawing.Point(1143, 54);
             this.BtnFindFolder.Name = "BtnFindFolder";
             this.BtnFindFolder.Size = new System.Drawing.Size(107, 40);
             this.BtnFindFolder.TabIndex = 6;
@@ -114,9 +114,9 @@
             // 
             // PbxLast
             // 
-            this.PbxLast.Location = new System.Drawing.Point(19, 167);
+            this.PbxLast.Location = new System.Drawing.Point(42, 167);
             this.PbxLast.Name = "PbxLast";
-            this.PbxLast.Size = new System.Drawing.Size(400, 290);
+            this.PbxLast.Size = new System.Drawing.Size(350, 240);
             this.PbxLast.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PbxLast.TabIndex = 7;
             this.PbxLast.TabStop = false;
@@ -138,7 +138,7 @@
             this.BtnSelectAndSet.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnSelectAndSet.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.BtnSelectAndSet.ForeColor = System.Drawing.Color.White;
-            this.BtnSelectAndSet.Location = new System.Drawing.Point(969, 534);
+            this.BtnSelectAndSet.Location = new System.Drawing.Point(925, 475);
             this.BtnSelectAndSet.Name = "BtnSelectAndSet";
             this.BtnSelectAndSet.Size = new System.Drawing.Size(281, 40);
             this.BtnSelectAndSet.TabIndex = 10;
@@ -152,7 +152,7 @@
             this.BtnSet.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnSet.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.BtnSet.ForeColor = System.Drawing.Color.White;
-            this.BtnSet.Location = new System.Drawing.Point(418, 534);
+            this.BtnSet.Location = new System.Drawing.Point(374, 475);
             this.BtnSet.Name = "BtnSet";
             this.BtnSet.Size = new System.Drawing.Size(545, 40);
             this.BtnSet.TabIndex = 11;
@@ -166,7 +166,7 @@
             this.BtnSelect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnSelect.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.BtnSelect.ForeColor = System.Drawing.Color.White;
-            this.BtnSelect.Location = new System.Drawing.Point(131, 534);
+            this.BtnSelect.Location = new System.Drawing.Point(87, 475);
             this.BtnSelect.Name = "BtnSelect";
             this.BtnSelect.Size = new System.Drawing.Size(281, 40);
             this.BtnSelect.TabIndex = 13;
@@ -182,7 +182,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(609, 96);
+            this.label4.Location = new System.Drawing.Point(566, 96);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(149, 26);
             this.label4.TabIndex = 15;
@@ -190,9 +190,9 @@
             // 
             // PbxNow
             // 
-            this.PbxNow.Location = new System.Drawing.Point(439, 125);
+            this.PbxNow.Location = new System.Drawing.Point(418, 125);
             this.PbxNow.Name = "PbxNow";
-            this.PbxNow.Size = new System.Drawing.Size(500, 390);
+            this.PbxNow.Size = new System.Drawing.Size(450, 340);
             this.PbxNow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PbxNow.TabIndex = 14;
             this.PbxNow.TabStop = false;
@@ -201,7 +201,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(1074, 138);
+            this.label5.Location = new System.Drawing.Point(998, 138);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(176, 26);
             this.label5.TabIndex = 17;
@@ -209,9 +209,9 @@
             // 
             // PbxRandom
             // 
-            this.PbxRandom.Location = new System.Drawing.Point(956, 167);
+            this.PbxRandom.Location = new System.Drawing.Point(900, 167);
             this.PbxRandom.Name = "PbxRandom";
-            this.PbxRandom.Size = new System.Drawing.Size(400, 290);
+            this.PbxRandom.Size = new System.Drawing.Size(350, 240);
             this.PbxRandom.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PbxRandom.TabIndex = 16;
             this.PbxRandom.TabStop = false;
@@ -222,9 +222,9 @@
             this.TbxFolder.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.TbxFolder.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.TbxFolder.FormattingEnabled = true;
-            this.TbxFolder.Location = new System.Drawing.Point(138, 59);
+            this.TbxFolder.Location = new System.Drawing.Point(111, 58);
             this.TbxFolder.Name = "TbxFolder";
-            this.TbxFolder.Size = new System.Drawing.Size(1095, 34);
+            this.TbxFolder.Size = new System.Drawing.Size(1010, 34);
             this.TbxFolder.TabIndex = 18;
             this.TbxFolder.SelectedIndexChanged += new System.EventHandler(this.TbxFolder_SelectedIndexChanged);
             // 
@@ -232,7 +232,7 @@
             // 
             this.LbxProperties.AutoSize = true;
             this.LbxProperties.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.LbxProperties.Location = new System.Drawing.Point(14, 608);
+            this.LbxProperties.Location = new System.Drawing.Point(12, 557);
             this.LbxProperties.Name = "LbxProperties";
             this.LbxProperties.Size = new System.Drawing.Size(115, 26);
             this.LbxProperties.TabIndex = 19;
@@ -243,7 +243,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1381, 643);
+            this.ClientSize = new System.Drawing.Size(1312, 592);
             this.Controls.Add(this.LbxProperties);
             this.Controls.Add(this.TbxFolder);
             this.Controls.Add(this.label5);
