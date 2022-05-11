@@ -171,6 +171,8 @@ namespace RandomWallpaper
                 WallpaperManager.SetImage();
                 WallpaperManager.SetImageOnWallpaper();
                 WallpaperManager.GetNewImage(BacgroundsArray);
+
+                AlertShow();
             }
             catch 
             {
@@ -192,6 +194,8 @@ namespace RandomWallpaper
                 WallpaperManager.SetImage();
                 WallpaperManager.SetImageOnWallpaper();
                 WallpaperManager.GetNewImage(BacgroundsArray);
+
+                AlertShow();
             }
             catch 
             {
@@ -233,22 +237,10 @@ namespace RandomWallpaper
             {
                 this.Hide();
                 this.ShowInTaskbar = false;
-
-                notifyIcon1.BalloonTipIcon = ToolTipIcon.Info;
-                notifyIcon1.BalloonTipText = "Нажмите, чтобы отобразить окно";
-                notifyIcon1.BalloonTipTitle = "Внимание";
-                notifyIcon1.ShowBalloonTip(4);
             }
         }
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            this.Show();
-            this.ShowInTaskbar = true;
-            WindowState = FormWindowState.Normal;
-        }
-
-        private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
         {
             this.Show();
             this.ShowInTaskbar = true;
@@ -276,6 +268,8 @@ namespace RandomWallpaper
             try
             {
                 WallpaperManager.SetLastWallpaper();
+
+                AlertShow();
             }
             catch
             {
@@ -327,6 +321,11 @@ namespace RandomWallpaper
         private void TbxFolder_SelectedIndexChanged(object sender, EventArgs e)
         {
             GetFiles();
+        }
+
+        private void CntQuit_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
