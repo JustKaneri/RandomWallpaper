@@ -68,20 +68,6 @@ namespace RandomWallpaper
             int time = managerProperties.GetTime();
             if (time > -1)
                 Start(time);
-
-            //using (var reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"))
-            //{
-            //    if (reg.GetValue(Application.ProductName) != null)
-            //    {
-            //        int index = history.GetAutoFolder(reg.GetValue(Application.ProductName).ToString().Split(' ')[1]);
-
-            //        if (index > -1)
-            //            TbxFolder.SelectedIndex = index;
-
-            //        GetFiles();
-            //    }
-
-            //}
         }
 
         private void Stop()
@@ -217,9 +203,7 @@ namespace RandomWallpaper
         private void FillCmb()
         {
             TbxFolder.Items.Clear();
-            TbxFolder.DropDownHeight = TbxFolder.ItemHeight;
-
-
+            //TbxFolder.DropDownHeight = TbxFolder.ItemHeight;
             foreach (var item in history.PathsFolder)
             {
                 TbxFolder.Items.Add(item);

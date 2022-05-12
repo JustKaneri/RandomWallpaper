@@ -99,7 +99,7 @@
             this.controlBox1.IsSizeFixed = true;
             this.controlBox1.Location = new System.Drawing.Point(0, 0);
             this.controlBox1.MaxBox = false;
-            this.controlBox1.MiniBox = true;
+            this.controlBox1.MiniBox = false;
             this.controlBox1.Name = "controlBox1";
             this.controlBox1.Size = new System.Drawing.Size(749, 42);
             this.controlBox1.TabIndex = 1;
@@ -228,7 +228,7 @@
             this.TblUiPage.Location = new System.Drawing.Point(4, 5);
             this.TblUiPage.Name = "TblUiPage";
             this.TblUiPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TblUiPage.Size = new System.Drawing.Size(542, 347);
+            this.TblUiPage.Size = new System.Drawing.Size(542, 349);
             this.TblUiPage.TabIndex = 1;
             this.TblUiPage.Text = "tabPage2";
             // 
@@ -368,7 +368,7 @@
             this.TblTotalPage.Location = new System.Drawing.Point(4, 5);
             this.TblTotalPage.Name = "TblTotalPage";
             this.TblTotalPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TblTotalPage.Size = new System.Drawing.Size(542, 347);
+            this.TblTotalPage.Size = new System.Drawing.Size(542, 349);
             this.TblTotalPage.TabIndex = 2;
             this.TblTotalPage.Text = "tabPage3";
             // 
