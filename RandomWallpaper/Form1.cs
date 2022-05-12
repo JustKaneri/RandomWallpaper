@@ -20,32 +20,74 @@ namespace RandomWallpaper
         {
             InitializeComponent();
         }
-
-        const int SPI_SETDESKWALLPAPER = 20;
-        const int SPIF_UPDATEINIFILE = 0x01;
-        const int SPIF_SENDWININICHANGE = 0x02;
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
-
-        //Список изображений.
+        
         private List<ImageBacground> BacgroundsArray = new List<ImageBacground>();
-        //Индекс выбранного изображения.
-        private int CurrentItem = -1;
+        private Manager WallpaperManager;
+        private History history;
+        private ManagetHistory managetHistory = new ManagetHistory();
+        private PropertiesManager managerProperties;
 
-        public bool IsAllGood { get; private set; }
+        /// <summary>
+        /// Загрузка формы.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            managerProperties = new PropertiesManager(this);
+            managerProperties.SetUI();
+            WallpaperManager = new Manager(this);
+            history = managetHistory.GetHistory();
+            FillCmb();
+
+            string[] arg = Environment.GetCommandLineArgs();
+
+            if (arg.Length > 1)
+            {
+                TbxFolder.Text = arg[1];
+
+                if (arg[2].Trim() == "fon")
+                {
+                    this.Hide();
+                    this.ShowInTaskbar = false;
+                    WindowState = FormWindowState.Minimized;
+
+                    if (TbxFolder.Items.Count == 0)
+                    {
+                        history.AddFolder(arg[1]);
+                        FillCmb();
+                    }
+
+                    TbxFolder.SelectedIndex = history.GetAutoFolder(arg[1]);
+                    GetFiles();
+                    BtnSelectAndSet_Click(null, null);
+                }
+
+            }
+
+            int time = managerProperties.GetTime();
+            if (time > -1)
+                Start(time);
+        }
+
+        private void Stop()
+        {
+            timer1.Enabled = false;
+        }
+
+        private void Start(int time)
+        {
+            timer1.Interval = int.Parse(time.ToString()) * 60000;
+            timer1.Enabled = true;
+        }
 
         private void BtnFindFolder_Click(object sender, EventArgs e)
         {
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
-                TbxFolder.Text = folderBrowserDialog1.SelectedPath;
+                history.AddFolder(folderBrowserDialog1.SelectedPath);
+                FillCmb();
                 GetFiles();
-
-                if (BacgroundsArray.Count != 0 && CbxAutoLoad.Checked)
-                {
-                    ChbxAutoLoad_CheckedChanged(null, null);
-                }
             }
         }
 
@@ -54,6 +96,14 @@ namespace RandomWallpaper
         /// </summary>
         private void GetFiles()
         {
+            if(string.IsNullOrWhiteSpace(TbxFolder.Text))
+            {
+                BacgroundsArray.Clear();
+                PbxRandom.Image = null;
+                return;
+            }
+            
+
             try
             {
                 string[] file = Directory.GetFiles(TbxFolder.Text);
@@ -81,92 +131,39 @@ namespace RandomWallpaper
             if (BacgroundsArray.Count == 0)
             {
                 MessageBox.Show("Изображения не найдены", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                PbxRandom.Image = null;
-                TbxFolder.Clear();
+                history.PathsFolder.RemoveAt(history.PathsFolder.Count - 1);
+                FillCmb();
                 return;
             }
             else
             {
-                SelectImage();
+                managetHistory.SaveHisory(history);
+                WallpaperManager.GetNewImage(BacgroundsArray);
             }
         }
-
-        /// <summary>
-        /// Выбор обоев.
-        /// </summary>
-        private void SelectImage()
-        {
-            Random rnd = new Random();
-
-            int Index = -1;
-
-            IsAllGood = false;
-
-            do
-            {
-                if(BacgroundsArray.Count == 0)
-                {
-                    NotFoundImage();
-                    break;
-                }
-
-                Index = rnd.Next(BacgroundsArray.Count - 1);
-
-                try
-                {
-                    PbxRandom.Image = Image.FromFile(BacgroundsArray[Index].PathImage);
-                    IsAllGood = true;
-                }
-                catch
-                {
-                    BacgroundsArray.RemoveAt(Index);
-                }
-
-                CurrentItem = Index;
-
-            } while (!IsAllGood);
-
-            
-        }
-
-        private void NotFoundImage()
-        {
-            MessageBox.Show("Изображения не найдены", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            CurrentItem = -1;
-            CbxAutoLoad.Checked = false;
-            CbxChange.Checked = false;
-            TbxFolder.Text = "";
-        }
-
+        
         private void BtnSelectAndSet_Click(object sender, EventArgs e)
         {
-
             if (BacgroundsArray.Count == 0)
             {
                 MessageBox.Show("Изображения не найдены", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            SelectImage();
-            SetImage();
-        }
-
-        /// <summary>
-        /// Установка обоев.
-        /// </summary>
-        private void SetImage()
-        {
-            using (var key = Registry.CurrentUser.OpenSubKey("Control Panel\\Desktop", true))
+            try
             {
-                key.SetValue("WallPaper", BacgroundsArray[CurrentItem].PathImage);
+
+                WallpaperManager.GetNewImage(BacgroundsArray);
+                WallpaperManager.SetImage();
+                WallpaperManager.SetImageOnWallpaper();
+                WallpaperManager.GetNewImage(BacgroundsArray);
+
+                AlertShow();
             }
-
-            SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, BacgroundsArray[CurrentItem].PathImage, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
-
-            CurrentItem = -1;
-
-            AlertShow();
-        }
+            catch 
+            {
+            }
+        }  
 
         /// <summary>
         /// Кнопка установить обои.
@@ -175,8 +172,20 @@ namespace RandomWallpaper
         /// <param name="e"></param>
         private void BtnSet_Click(object sender, EventArgs e)
         {
-            if (CurrentItem != -1)
-                SetImage();
+            if (PbxRandom.Image == null)
+                return;
+
+            try
+            {
+                WallpaperManager.SetImage();
+                WallpaperManager.SetImageOnWallpaper();
+                WallpaperManager.GetNewImage(BacgroundsArray);
+
+                AlertShow();
+            }
+            catch 
+            {
+            }
         }
 
         /// <summary>
@@ -190,114 +199,32 @@ namespace RandomWallpaper
             notifyIcon1.ShowBalloonTip(4);
 
         }
-  
-        private void ChbxAutoLoad_CheckedChanged(object sender, EventArgs e)
+        
+        private void FillCmb()
         {
-            if (CbxAutoLoad.Checked)
+            TbxFolder.Items.Clear();
+            //TbxFolder.DropDownHeight = TbxFolder.ItemHeight;
+            foreach (var item in history.PathsFolder)
             {
-                SetAutoLoadApp();
+                TbxFolder.Items.Add(item);
             }
-            else
-            {
-                DisAutoLoadApp();
-            }
+
+            TbxFolder.SelectedIndex = TbxFolder.Items.Count - 1;
+
+            if (history.PathsFolder.Count > 0)
+                GetFiles();
         }
-
-        /// <summary>
-        /// Удаление из автозагрузки.
-        /// </summary>
-        private void DisAutoLoadApp()
-        {
-            using (var reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true))
-            {
-                if (reg.GetValue(Application.ProductName) != null)
-                    reg.DeleteValue(Application.ProductName);
-
-            }
-        }
-
-        /// <summary>
-        /// Установка автозагрузки
-        /// </summary>
-        private void SetAutoLoadApp()
-        {
-            string Exect = $"\"{Application.ExecutablePath}\" {TbxFolder.Text} fon";
-
-            using (var reg = Registry.CurrentUser.CreateSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run\\"))
-            {
-                reg.SetValue(Application.ProductName, Exect);
-            }
-        }
-
-        /// <summary>
-        /// Загрузка формы.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            string[] arg = Environment.GetCommandLineArgs();
-
-            if (arg.Length > 1)
-            {
-                TbxFolder.Text = arg[1];
-
-                if (arg[2].Trim() == "fon")
-                {
-                    this.Hide();
-                    this.ShowInTaskbar = false;
-                    WindowState = FormWindowState.Minimized;
-                    GetFiles();
-                    BtnSelectAndSet_Click(null, null);
-                }
-
-            }
-
-            using (var reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"))
-            {
-                if(reg.GetValue(Application.ProductName) != null)
-                {
-                    TbxFolder.Text = reg.GetValue(Application.ProductName).ToString().Split(' ')[1];
-                    CbxAutoLoad.Checked = true;
-                    GetFiles();
-                }
-                
-            }
-        }
-
-        /// <summary>
-        /// Блокировка автозагруки если путь не указан.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TbxFolder_TextChanged(object sender, EventArgs e)
-        {
-            CbxAutoLoad.Enabled = TbxFolder.Text != String.Empty;
-            CbxChange.Enabled = TbxFolder.Text != String.Empty;
-        }
-
+        
         private void Form1_Resize(object sender, EventArgs e)
         {
             if(WindowState == FormWindowState.Minimized)
             {
                 this.Hide();
                 this.ShowInTaskbar = false;
-
-                notifyIcon1.BalloonTipIcon = ToolTipIcon.Info;
-                notifyIcon1.BalloonTipText = "Нажмите, чтобы отобразить окно";
-                notifyIcon1.BalloonTipTitle = "Внимание";
-                notifyIcon1.ShowBalloonTip(4);
             }
         }
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            this.Show();
-            this.ShowInTaskbar = true;
-            WindowState = FormWindowState.Normal;
-        }
-
-        private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
         {
             this.Show();
             this.ShowInTaskbar = true;
@@ -312,40 +239,88 @@ namespace RandomWallpaper
                 return;
             }
 
-            SelectImage();
+            WallpaperManager.GetNewImage(BacgroundsArray);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            BtnSelectAndSet_Click(null, null);
+            BtnSet_Click(null, null);
         }
-
-        private void CbxChange_CheckedChanged(object sender, EventArgs e)
+        
+        private void PbxLast_Click(object sender, EventArgs e)
         {
-            if(CbxChange.Checked)
+            try
             {
-                timer1.Interval = int.Parse(TbxTime.Text) * 60000;
-                timer1.Enabled = true;
-            } 
-            else
+                WallpaperManager.SetLastWallpaper();
+
+                AlertShow();
+            }
+            catch
             {
-                timer1.Enabled = false;
+
             }
         }
 
-        private void TbxTime_KeyPress(object sender, KeyPressEventArgs e)
+        private void PbxRandom_Click(object sender, EventArgs e)
         {
-            if (!Char.IsDigit(e.KeyChar))
-                e.Handled = true;
+            if (BacgroundsArray.Count == 0)
+            {
+                MessageBox.Show("Изображения не найдены", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-            if ((Keys)e.KeyChar == Keys.Back)
-                e.Handled = false;
+            WallpaperManager.GetNewImage(BacgroundsArray);
         }
 
-        private void TbxTime_TextChanged(object sender, EventArgs e)
+        private void LbxProperties_Click(object sender, EventArgs e)
         {
-            if (TbxTime.Text.Equals("0"))
-                TbxTime.Text = "5";
+            FormProperties properties = new FormProperties(TbxFolder.Text);
+            properties.ShowDialog();
+
+            managerProperties = new PropertiesManager(this);
+            managerProperties.SetUI();
+
+            if(properties.IsDelete)
+            {
+                history = managetHistory.GetHistory();
+                FillCmb();
+                GetFiles();
+            }
+
+            if(properties.IsUpdateWallp)
+            {
+                int time = managerProperties.GetTime();
+                if (time > -1)
+                    Start(time);
+                else
+                    Stop();
+            }
+            else
+            {
+                Stop();
+            }
+            
+        }
+
+        private void TbxFolder_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GetFiles();
+        }
+
+        private void CntQuit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void LbxHelp_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(Application.StartupPath + "\\help.chm");
+            }
+            catch
+            {
+            }
         }
     }
 }
