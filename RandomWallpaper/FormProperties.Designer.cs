@@ -63,6 +63,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.BtnSelect = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.CbxMessage = new System.Windows.Forms.CheckBox();
             this.TabPanel.SuspendLayout();
             this.TbInfoPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -172,7 +173,7 @@
             this.textBox2.ReadOnly = true;
             this.textBox2.Size = new System.Drawing.Size(405, 21);
             this.textBox2.TabIndex = 4;
-            this.textBox2.Text = "2.0";
+            this.textBox2.Text = "2.1";
             // 
             // label2
             // 
@@ -374,6 +375,7 @@
             // 
             // GpProperties
             // 
+            this.GpProperties.Controls.Add(this.CbxMessage);
             this.GpProperties.Controls.Add(this.BtnDelHistory);
             this.GpProperties.Controls.Add(this.label7);
             this.GpProperties.Controls.Add(this.TbxTime);
@@ -382,7 +384,7 @@
             this.GpProperties.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.GpProperties.Location = new System.Drawing.Point(6, 15);
             this.GpProperties.Name = "GpProperties";
-            this.GpProperties.Size = new System.Drawing.Size(528, 180);
+            this.GpProperties.Size = new System.Drawing.Size(528, 206);
             this.GpProperties.TabIndex = 13;
             this.GpProperties.TabStop = false;
             this.GpProperties.Text = "Доп параметры";
@@ -393,7 +395,7 @@
             this.BtnDelHistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnDelHistory.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.BtnDelHistory.ForeColor = System.Drawing.Color.White;
-            this.BtnDelHistory.Location = new System.Drawing.Point(6, 118);
+            this.BtnDelHistory.Location = new System.Drawing.Point(6, 145);
             this.BtnDelHistory.Name = "BtnDelHistory";
             this.BtnDelHistory.Size = new System.Drawing.Size(401, 40);
             this.BtnDelHistory.TabIndex = 15;
@@ -510,6 +512,17 @@
             this.BtnSelect.UseVisualStyleBackColor = false;
             this.BtnSelect.Click += new System.EventHandler(this.BtnSelect_Click);
             // 
+            // CbxMessage
+            // 
+            this.CbxMessage.AutoSize = true;
+            this.CbxMessage.Location = new System.Drawing.Point(6, 109);
+            this.CbxMessage.Name = "CbxMessage";
+            this.CbxMessage.Size = new System.Drawing.Size(250, 30);
+            this.CbxMessage.TabIndex = 16;
+            this.CbxMessage.Text = "Отключить оповещения";
+            this.CbxMessage.UseVisualStyleBackColor = true;
+            this.CbxMessage.CheckedChanged += new System.EventHandler(this.CbxMessage_CheckedChanged);
+            // 
             // FormProperties
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 18F);
@@ -581,5 +594,6 @@
         private System.Windows.Forms.CheckBox CbxChange;
         private System.Windows.Forms.CheckBox CbxAutoLoad;
         private System.Windows.Forms.Button BtnDelHistory;
+        private System.Windows.Forms.CheckBox CbxMessage;
     }
 }

@@ -100,7 +100,6 @@ namespace RandomWallpaper
 
         private void PainIndicaterColor()
         {
-
             PbxColorBack.BackColor = BtnTest.BackColor;
             PbxColorFont.BackColor = BtnTest.ForeColor;
             PbxBorderColor.BackColor = controlBox1.BorderColor;
@@ -112,6 +111,8 @@ namespace RandomWallpaper
 
             if (cfg == null)
                 return;
+
+            CbxMessage.Checked = !cfg.IsShowMessage;
 
             BtnSave.BackColor = cfg.BackColorButton;
             BtnSave.ForeColor = cfg.FontColorButton;
@@ -211,6 +212,15 @@ namespace RandomWallpaper
                 propertiesManager.StopUpdate();
                 IsUpdateWallp = false;
             }
+        }
+
+        private void CbxMessage_CheckedChanged(object sender, EventArgs e)
+        {
+            var cfg = propertiesManager.GetConfigurat();
+
+            cfg.IsShowMessage = !CbxMessage.Checked;
+
+            propertiesManager.SaveUI(cfg);
         }
     }
 }

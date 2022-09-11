@@ -193,11 +193,15 @@ namespace RandomWallpaper
         /// </summary>
         private void AlertShow()
         {
-            notifyIcon1.BalloonTipIcon = ToolTipIcon.Info;
-            notifyIcon1.BalloonTipText = "Обои успешно установлены";
-            notifyIcon1.BalloonTipTitle = "Успех";
-            notifyIcon1.ShowBalloonTip(4);
+            var cfg = managerProperties.GetConfigurat();
 
+            if (cfg.IsShowMessage)
+            {
+                notifyIcon1.BalloonTipIcon = ToolTipIcon.Info;
+                notifyIcon1.BalloonTipText = "Обои успешно установлены";
+                notifyIcon1.BalloonTipTitle = "Успех";
+                notifyIcon1.ShowBalloonTip(4);
+            }
         }
         
         private void FillCmb()

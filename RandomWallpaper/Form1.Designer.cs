@@ -273,6 +273,7 @@
             // 
             this.LbxProperties.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.LbxProperties.AutoSize = true;
+            this.LbxProperties.Cursor = System.Windows.Forms.Cursors.Hand;
             this.LbxProperties.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.LbxProperties.Location = new System.Drawing.Point(12, 557);
             this.LbxProperties.Name = "LbxProperties";

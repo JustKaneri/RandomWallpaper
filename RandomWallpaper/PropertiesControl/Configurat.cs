@@ -13,5 +13,6 @@ namespace RandomWallpaper
         public Color BackColorButton { get; set; }
         public Color FontColorButton { get; set; }
         public Color BorderColorButton { get; set; }
+        public bool IsShowMessage { get; set; } = true;
     }
 }
