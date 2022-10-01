@@ -53,6 +53,7 @@
             this.BtnSave = new System.Windows.Forms.Button();
             this.TblTotalPage = new System.Windows.Forms.TabPage();
             this.GpProperties = new System.Windows.Forms.GroupBox();
+            this.CbxMessage = new System.Windows.Forms.CheckBox();
             this.BtnDelHistory = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.TbxTime = new System.Windows.Forms.TextBox();
@@ -63,7 +64,6 @@
             this.button1 = new System.Windows.Forms.Button();
             this.BtnSelect = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.CbxMessage = new System.Windows.Forms.CheckBox();
             this.TabPanel.SuspendLayout();
             this.TbInfoPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -113,10 +113,10 @@
             this.TabPanel.Controls.Add(this.TblUiPage);
             this.TabPanel.Controls.Add(this.TblTotalPage);
             this.TabPanel.ItemSize = new System.Drawing.Size(1, 1);
-            this.TabPanel.Location = new System.Drawing.Point(186, 72);
+            this.TabPanel.Location = new System.Drawing.Point(186, 70);
             this.TabPanel.Name = "TabPanel";
             this.TabPanel.SelectedIndex = 0;
-            this.TabPanel.Size = new System.Drawing.Size(550, 358);
+            this.TabPanel.Size = new System.Drawing.Size(550, 360);
             this.TabPanel.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.TabPanel.TabIndex = 2;
             // 
@@ -134,7 +134,7 @@
             this.TbInfoPage.Location = new System.Drawing.Point(4, 5);
             this.TbInfoPage.Name = "TbInfoPage";
             this.TbInfoPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TbInfoPage.Size = new System.Drawing.Size(542, 349);
+            this.TbInfoPage.Size = new System.Drawing.Size(542, 351);
             this.TbInfoPage.TabIndex = 0;
             this.TbInfoPage.Text = "tabPage1";
             // 
@@ -173,7 +173,7 @@
             this.textBox2.ReadOnly = true;
             this.textBox2.Size = new System.Drawing.Size(405, 21);
             this.textBox2.TabIndex = 4;
-            this.textBox2.Text = "2.1";
+            this.textBox2.Text = "2.2";
             // 
             // label2
             // 
@@ -211,7 +211,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(6, 0);
+            this.pictureBox1.Location = new System.Drawing.Point(11, 0);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(510, 212);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -229,7 +229,7 @@
             this.TblUiPage.Location = new System.Drawing.Point(4, 5);
             this.TblUiPage.Name = "TblUiPage";
             this.TblUiPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TblUiPage.Size = new System.Drawing.Size(542, 349);
+            this.TblUiPage.Size = new System.Drawing.Size(542, 351);
             this.TblUiPage.TabIndex = 1;
             this.TblUiPage.Text = "tabPage2";
             // 
@@ -239,7 +239,7 @@
             this.BtnDef.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnDef.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.BtnDef.ForeColor = System.Drawing.Color.White;
-            this.BtnDef.Location = new System.Drawing.Point(15, 306);
+            this.BtnDef.Location = new System.Drawing.Point(15, 301);
             this.BtnDef.Name = "BtnDef";
             this.BtnDef.Size = new System.Drawing.Size(150, 40);
             this.BtnDef.TabIndex = 25;
@@ -353,7 +353,7 @@
             this.BtnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnSave.Font = new System.Drawing.Font("Trebuchet MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.BtnSave.ForeColor = System.Drawing.Color.White;
-            this.BtnSave.Location = new System.Drawing.Point(363, 306);
+            this.BtnSave.Location = new System.Drawing.Point(363, 301);
             this.BtnSave.Name = "BtnSave";
             this.BtnSave.Size = new System.Drawing.Size(150, 40);
             this.BtnSave.TabIndex = 14;
@@ -369,7 +369,7 @@
             this.TblTotalPage.Location = new System.Drawing.Point(4, 5);
             this.TblTotalPage.Name = "TblTotalPage";
             this.TblTotalPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TblTotalPage.Size = new System.Drawing.Size(542, 349);
+            this.TblTotalPage.Size = new System.Drawing.Size(542, 351);
             this.TblTotalPage.TabIndex = 2;
             this.TblTotalPage.Text = "tabPage3";
             // 
@@ -388,6 +388,17 @@
             this.GpProperties.TabIndex = 13;
             this.GpProperties.TabStop = false;
             this.GpProperties.Text = "Доп параметры";
+            // 
+            // CbxMessage
+            // 
+            this.CbxMessage.AutoSize = true;
+            this.CbxMessage.Location = new System.Drawing.Point(6, 109);
+            this.CbxMessage.Name = "CbxMessage";
+            this.CbxMessage.Size = new System.Drawing.Size(250, 30);
+            this.CbxMessage.TabIndex = 16;
+            this.CbxMessage.Text = "Отключить оповещения";
+            this.CbxMessage.UseVisualStyleBackColor = true;
+            this.CbxMessage.CheckedChanged += new System.EventHandler(this.CbxMessage_CheckedChanged);
             // 
             // BtnDelHistory
             // 
@@ -511,17 +522,6 @@
             this.BtnSelect.Text = "О программе";
             this.BtnSelect.UseVisualStyleBackColor = false;
             this.BtnSelect.Click += new System.EventHandler(this.BtnSelect_Click);
-            // 
-            // CbxMessage
-            // 
-            this.CbxMessage.AutoSize = true;
-            this.CbxMessage.Location = new System.Drawing.Point(6, 109);
-            this.CbxMessage.Name = "CbxMessage";
-            this.CbxMessage.Size = new System.Drawing.Size(250, 30);
-            this.CbxMessage.TabIndex = 16;
-            this.CbxMessage.Text = "Отключить оповещения";
-            this.CbxMessage.UseVisualStyleBackColor = true;
-            this.CbxMessage.CheckedChanged += new System.EventHandler(this.CbxMessage_CheckedChanged);
             // 
             // FormProperties
             // 

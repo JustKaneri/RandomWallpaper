@@ -80,7 +80,13 @@ namespace RandomWallpaper
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            Configurat configurat = new Configurat();
+            var cfg = propertiesManager.GetConfigurat();
+
+            Configurat configurat = cfg;
+
+            if (cfg == null)
+               configurat = new Configurat();
+
             configurat.BackColorButton = BtnTest.BackColor;
             configurat.FontColorButton = BtnTest.ForeColor;
             configurat.BorderColorButton = controlBox1.BorderColor;
@@ -91,11 +97,30 @@ namespace RandomWallpaper
 
         private void FormProperties_Load(object sender, EventArgs e)
         {
+            CreateDefaultConfig();
+
             PaintUI();
 
             PainIndicaterColor();
 
             CbxAutoLoad.Checked = propertiesManager.IsAutoLoad();
+        }
+
+        private void CreateDefaultConfig()
+        {
+            var cfg = propertiesManager.GetConfigurat();
+
+            if (cfg == null)
+            {
+                cfg = new Configurat();
+
+                cfg.BackColorButton = BtnTest.BackColor;
+                cfg.FontColorButton = BtnTest.ForeColor;
+                cfg.BorderColorButton = controlBox1.BorderColor;
+
+                propertiesManager.SaveUI(cfg);
+            }
+                
         }
 
         private void PainIndicaterColor()
@@ -218,9 +243,13 @@ namespace RandomWallpaper
         {
             var cfg = propertiesManager.GetConfigurat();
 
+            if (cfg == null)
+                cfg = new Configurat();
+
             cfg.IsShowMessage = !CbxMessage.Checked;
 
             propertiesManager.SaveUI(cfg);
         }
+
     }
 }
