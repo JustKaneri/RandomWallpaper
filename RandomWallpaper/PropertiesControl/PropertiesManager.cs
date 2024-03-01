@@ -16,8 +16,8 @@ namespace RandomWallpaper
     {
         private Form Self;
 
-        public EventHandler StartUpdating;
-        public EventHandler StopUpdating;
+        //public EventHandler StartUpdating;
+        //public EventHandler StopUpdating;
 
         public PropertiesManager(Form form)
         {
