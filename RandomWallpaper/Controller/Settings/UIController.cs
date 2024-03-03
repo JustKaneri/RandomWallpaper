@@ -2,6 +2,7 @@
 using RandomWallpaper.Model;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,13 +33,14 @@ namespace RandomWallpaper.Controller.Settings
                     if ((item as Button).Tag != null)
                         continue;
 
-                    (item as Button).BackColor = _settings.BackgroundCollorButton;
-                    (item as Button).ForeColor = _settings.FontColorButton;
+                    
+                    (item as Button).BackColor = ColorTranslator.FromHtml(_settings.BackgroundCollorButton);
+                    (item as Button).ForeColor = ColorTranslator.FromHtml(_settings.FontColorButton);
                 }
 
                 if (item is ControlBox)
                 {
-                    (item as ControlBox).BorderColor = _settings.BorderCollor;
+                    (item as ControlBox).BorderColor = ColorTranslator.FromHtml(_settings.BorderCollor);
                 }
             }
         }

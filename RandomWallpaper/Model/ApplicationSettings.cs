@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RandomWallpaper.Extension;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -13,17 +14,17 @@ namespace RandomWallpaper.Model
         /// <summary>
         /// Цвет рамки приложения
         /// </summary>
-        public Color BorderCollor { get; set; } = Color.FromArgb(80, 53, 96);
+        public string BorderCollor { get; set; } = Color.FromArgb(80, 53, 96).ToHex();
 
         /// <summary>
         /// Цвет фона кнопок
         /// </summary>
-        public Color BackgroundCollorButton { get; set; } = Color.FromArgb(80, 53, 96);
+        public string BackgroundCollorButton { get; set; } = Color.FromArgb(80, 53, 96).ToHex();
 
         /// <summary>
         /// Цвет текста кнопок
         /// </summary>
-        public Color FontColorButton { get; set; } = Color.White;
+        public string FontColorButton { get; set; } = Color.White.ToHex();
 
         /// <summary>
         /// Показывать или нет оповещения
@@ -47,9 +48,9 @@ namespace RandomWallpaper.Model
 
         public void Reset()
         {
-            BorderCollor  = Color.FromArgb(80, 53, 96);
-            BackgroundCollorButton  = Color.FromArgb(80, 53, 96);
-            FontColorButton = Color.White;
+            BorderCollor  = Color.FromArgb(80, 53, 96).ToString();
+            BackgroundCollorButton  = Color.FromArgb(80, 53, 96).ToString();
+            FontColorButton = Color.White.ToString();
             IsShowAllert  = true;
             PeriodСhange  = 5;
             IsChange = false;

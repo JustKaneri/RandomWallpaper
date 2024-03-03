@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using RandomWallpaper.Controller.Settings;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,7 +26,8 @@ namespace RandomWallpaper
         private Manager WallpaperManager;
         private History history;
         private ManagetHistory managetHistory = new ManagetHistory();
-        private PropertiesManager managerProperties;
+        private SettingsMangaer _mangaer;
+
 
         /// <summary>
         /// Загрузка формы.
@@ -34,8 +36,9 @@ namespace RandomWallpaper
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
-            managerProperties = new PropertiesManager(this);
-            managerProperties.SetUI();
+            _mangaer = new SettingsMangaer();
+            _mangaer.UpdateUI(this);
+
             WallpaperManager = new Manager(this);
             history = managetHistory.GetHistory();
             FillCmb();
@@ -65,20 +68,13 @@ namespace RandomWallpaper
 
             }
 
-            int time = managerProperties.GetTime();
-            if (time > -1)
-                Start(time);
+            TimeWorker(_mangaer.TimerStatus().Item1, _mangaer.TimerStatus().Item2);
         }
 
-        private void Stop()
-        {
-            timer1.Enabled = false;
-        }
-
-        private void Start(int time)
+        private void TimeWorker(int time,bool isWork)
         {
             timer1.Interval = int.Parse(time.ToString()) * 60000;
-            timer1.Enabled = true;
+            timer1.Enabled = isWork;
         }
 
         private void BtnFindFolder_Click(object sender, EventArgs e)
@@ -193,17 +189,17 @@ namespace RandomWallpaper
         /// </summary>
         private void AlertShow()
         {
-            var cfg = managerProperties.GetConfigurat();
+            //var cfg = managerProperties.GetConfigurat();
 
-            if (cfg.IsShowMessage)
-            {
-                notifyIcon1.BalloonTipIcon = ToolTipIcon.Info;
-                notifyIcon1.BalloonTipText = "Обои успешно установлены";
-                notifyIcon1.BalloonTipTitle = "Успех";
-                notifyIcon1.ShowBalloonTip(4);
-            }
+            //if (cfg.IsShowMessage)
+            //{
+            //    notifyIcon1.BalloonTipIcon = ToolTipIcon.Info;
+            //    notifyIcon1.BalloonTipText = "Обои успешно установлены";
+            //    notifyIcon1.BalloonTipTitle = "Успех";
+            //    notifyIcon1.ShowBalloonTip(4);
+            //}
         }
-        
+
         private void FillCmb()
         {
             TbxFolder.Items.Clear();
@@ -281,8 +277,7 @@ namespace RandomWallpaper
             FormProperties properties = new FormProperties(TbxFolder.Text);
             properties.ShowDialog();
 
-            managerProperties = new PropertiesManager(this);
-            managerProperties.SetUI();
+            _mangaer.UpdateUI(this);
 
             if(properties.IsDelete)
             {
@@ -291,19 +286,8 @@ namespace RandomWallpaper
                 GetFiles();
             }
 
-            if(properties.IsUpdateWallp)
-            {
-                int time = managerProperties.GetTime();
-                if (time > -1)
-                    Start(time);
-                else
-                    Stop();
-            }
-            else
-            {
-                Stop();
-            }
-            
+            TimeWorker(_mangaer.TimerStatus().Item1, _mangaer.TimerStatus().Item2);
+
         }
 
         private void TbxFolder_SelectedIndexChanged(object sender, EventArgs e)

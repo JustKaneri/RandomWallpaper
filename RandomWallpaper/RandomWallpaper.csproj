@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>RandomWallpaper</RootNamespace>
     <AssemblyName>RandomWallpaper</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -59,9 +59,11 @@
     <Compile Include="Controller\File\XmlFileSave.cs" />
     <Compile Include="Controller\Settings\AutoStartController.cs" />
     <Compile Include="Controller\Settings\SettingsFileController.cs" />
+    <Compile Include="Controller\Settings\SettingsMangaer.cs" />
     <Compile Include="Controller\Settings\TimerController.cs" />
     <Compile Include="Controller\File\XmlFileLoader.cs" />
     <Compile Include="Controller\Settings\UIController.cs" />
+    <Compile Include="Extension\ColorExtension.cs" />
     <Compile Include="Interface\IFileLoader.cs" />
     <Compile Include="Interface\IFileSave.cs" />
     <Compile Include="Model\ApplicationSettings.cs" />

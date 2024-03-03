@@ -6,7 +6,7 @@ namespace RandomWallpaper.Controller.Settings
 {
     public class SettingsFileController
     {
-        private readonly ApplicationSettings _applicationSettings;
+        private ApplicationSettings _applicationSettings;
 
         public SettingsFileController(ApplicationSettings applicationSettings)
         {
@@ -27,18 +27,19 @@ namespace RandomWallpaper.Controller.Settings
 
         public ApplicationSettings LoadSetting(string path,IFileLoader fileLoader)
         {
-            ApplicationSettings settings = null;
 
             try
             {
-                settings = fileLoader.Load(path);
+                _applicationSettings = fileLoader.Load(path);
             }
             catch (Exception ex)
             {
-                throw ex;
+                _applicationSettings = null;
+                Console.WriteLine(ex.Message);
             }
 
-            return settings;
+
+            return _applicationSettings;
         }
     }
 }
