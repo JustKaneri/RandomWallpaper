@@ -26,7 +26,7 @@ namespace RandomWallpaper
         private Manager WallpaperManager;
         private History history;
         private ManagetHistory managetHistory = new ManagetHistory();
-        private SettingsMangaer _mangaer;
+        private SettingsMangaer _mangaerSettings;
 
 
         /// <summary>
@@ -36,8 +36,8 @@ namespace RandomWallpaper
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
-            _mangaer = new SettingsMangaer();
-            _mangaer.UpdateUI(this);
+            _mangaerSettings = new SettingsMangaer();
+            _mangaerSettings.UpdateUI(this);
 
             WallpaperManager = new Manager(this);
             history = managetHistory.GetHistory();
@@ -68,7 +68,7 @@ namespace RandomWallpaper
 
             }
 
-            TimeWorker(_mangaer.TimerStatus().Item1, _mangaer.TimerStatus().Item2);
+            TimeWorker(_mangaerSettings.TimerStatus().Item1, _mangaerSettings.TimerStatus().Item2);
         }
 
         private void TimeWorker(int time,bool isWork)
@@ -274,19 +274,19 @@ namespace RandomWallpaper
 
         private void LbxProperties_Click(object sender, EventArgs e)
         {
-            FormProperties properties = new FormProperties(TbxFolder.Text);
+            FormProperties properties = new FormProperties(_mangaerSettings);
             properties.ShowDialog();
 
-            _mangaer.UpdateUI(this);
+            _mangaerSettings.UpdateUI(this);
 
-            if(properties.IsDelete)
-            {
-                history = managetHistory.GetHistory();
-                FillCmb();
-                GetFiles();
-            }
+            //if(properties.IsDelete)
+            //{
+            //    history = managetHistory.GetHistory();
+            //    FillCmb();
+            //    GetFiles();
+            //}
 
-            TimeWorker(_mangaer.TimerStatus().Item1, _mangaer.TimerStatus().Item2);
+            TimeWorker(_mangaerSettings.TimerStatus().Item1, _mangaerSettings.TimerStatus().Item2);
 
         }
 

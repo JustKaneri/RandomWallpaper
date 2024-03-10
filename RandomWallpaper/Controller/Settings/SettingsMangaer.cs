@@ -2,6 +2,7 @@
 using RandomWallpaper.Model;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace RandomWallpaper.Controller.Settings
 {
     public class SettingsMangaer
     {
+        private AlertController _alertController;
         private AutoStartController _autoStartController;
         private SettingsFileController _settingsFileController;
         private TimerController _timerController;
@@ -36,6 +38,7 @@ namespace RandomWallpaper.Controller.Settings
 
             _timerController = new TimerController(_settings);
             _autoStartController = new AutoStartController(_settings);
+            _alertController = new AlertController(_settings);
         }
 
         #region Таймер
@@ -73,22 +76,58 @@ namespace RandomWallpaper.Controller.Settings
             _uiController.UpdateColorTheme();
         }
 
+        public void SetColors(Color fontColor, Color borderColor, Color buttonColor)
+        {
+            _uiController.SetColors(fontColor, borderColor, buttonColor);
+            SaveSetting();
+        }
+
+        public (Color font,Color border,Color button) GetColors()
+        {
+            return (  ColorTranslator.FromHtml(_settings.FontColorButton)
+                    , ColorTranslator.FromHtml(_settings.BorderCollor)
+                    , ColorTranslator.FromHtml(_settings.BackgroundCollorButton));
+        }
+
+        public void SetDefaultColor()
+        {
+            _uiController.SetDefaultColor();
+            SaveSetting();
+        }
+
         public void AutoLoadEnable()
         {
            
             _autoStartController.Enable();
-            _settingsFileController.SaveSettings(Path, new XmlFileSave(FileName));
+            SaveSetting();
         }
 
         public void AutoLoadDisable()
         {
             _autoStartController.Disable();
-            _settingsFileController.SaveSettings(Path, new XmlFileSave(FileName));
+            SaveSetting();
         }
 
         public bool AutoLoadStatus()
         {
            return _autoStartController.Status();
+        }
+
+        public bool AlertStatus()
+        {
+            return _alertController.AlertStatuse();
+        }
+
+        public void AlertEnable() 
+        {
+            _alertController.AlertEnable();
+            SaveSetting();
+        }
+
+        public void AlertDisable()
+        {
+            _alertController.AlertDisable();
+            SaveSetting();
         }
     }
 }

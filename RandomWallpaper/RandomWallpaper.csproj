@@ -57,6 +57,7 @@
     <Compile Include="Controller\File\BinaryFileSave.cs" />
     <Compile Include="Controller\File\FileParameterChecker.cs" />
     <Compile Include="Controller\File\XmlFileSave.cs" />
+    <Compile Include="Controller\Settings\AlertController.cs" />
     <Compile Include="Controller\Settings\AutoStartController.cs" />
     <Compile Include="Controller\Settings\SettingsFileController.cs" />
     <Compile Include="Controller\Settings\SettingsMangaer.cs" />

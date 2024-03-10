@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RandomWallpaper.Controller.Settings;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,25 +14,25 @@ namespace RandomWallpaper
     public partial class FormProperties : Form
     {
         private string Path;
-        private PropertiesManager propertiesManager;
-        public bool IsDelete = false;
-        public bool IsUpdateWallp = false;
+        private readonly SettingsMangaer _settingsManager;
 
-        public FormProperties(string path)
+        public FormProperties(SettingsMangaer settingsManager)
         {
             InitializeComponent();
 
-            Path = path;
+            _settingsManager = settingsManager;
 
-            propertiesManager = new PropertiesManager(this);
+            TbxTime.Text = _settingsManager.TimerStatus().Item1.ToString();
+            CbxChange.Checked = _settingsManager.TimerStatus().Item2;
+            CbxAutoLoad.Checked = _settingsManager.AutoLoadStatus();
+            CbxMessage.Checked = _settingsManager.AlertStatus();
+        }
 
-            int tm = propertiesManager.GetTime();
+        private void FormProperties_Load(object sender, EventArgs e)
+        {
+            UpdateUiLocal();
 
-            if(tm>-1)
-            {
-                TbxTime.Text = tm.ToString();
-                CbxChange.Checked = true;
-            }
+            PainIndicaterColor();
         }
 
         #region Переключения по вкладкам
@@ -51,6 +52,7 @@ namespace RandomWallpaper
         }
         #endregion
 
+        #region Colors Settings
         private void PbxColorBack_Click(object sender, EventArgs e)
         {
              if(colorDialog1.ShowDialog() == DialogResult.OK)
@@ -80,48 +82,10 @@ namespace RandomWallpaper
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            var cfg = propertiesManager.GetConfigurat();
-
-            Configurat configurat = cfg;
-
-            if (cfg == null)
-               configurat = new Configurat();
-
-            configurat.BackColorButton = BtnTest.BackColor;
-            configurat.FontColorButton = BtnTest.ForeColor;
-            configurat.BorderColorButton = controlBox1.BorderColor;
-
-            propertiesManager.SaveUI(configurat);
-            PaintUI();
+            _settingsManager.SetColors(BtnTest.ForeColor, controlBox1.BorderColor, BtnTest.BackColor);
+            UpdateUiLocal();
         }
 
-        private void FormProperties_Load(object sender, EventArgs e)
-        {
-            CreateDefaultConfig();
-
-            PaintUI();
-
-            PainIndicaterColor();
-
-            CbxAutoLoad.Checked = propertiesManager.IsAutoLoad();
-        }
-
-        private void CreateDefaultConfig()
-        {
-            var cfg = propertiesManager.GetConfigurat();
-
-            if (cfg == null)
-            {
-                cfg = new Configurat();
-
-                cfg.BackColorButton = BtnTest.BackColor;
-                cfg.FontColorButton = BtnTest.ForeColor;
-                cfg.BorderColorButton = controlBox1.BorderColor;
-
-                propertiesManager.SaveUI(cfg);
-            }
-                
-        }
 
         private void PainIndicaterColor()
         {
@@ -129,42 +93,40 @@ namespace RandomWallpaper
             PbxColorFont.BackColor = BtnTest.ForeColor;
             PbxBorderColor.BackColor = controlBox1.BorderColor;
         }
-        
-        private void PaintUI()
+
+        private void UpdateUiLocal()
         {
-            var cfg = propertiesManager.GetConfigurat();
+            var colors = _settingsManager.GetColors();
 
-            if (cfg == null)
-                return;
+            BtnSave.BackColor = colors.button;
+            BtnSave.ForeColor = colors.font;
 
-            CbxMessage.Checked = !cfg.IsShowMessage;
+            BtnDef.BackColor = colors.button;
+            BtnDef.ForeColor = colors.font;
 
-            BtnSave.BackColor = cfg.BackColorButton;
-            BtnSave.ForeColor = cfg.FontColorButton;
+            BtnTest.BackColor = colors.button;
+            BtnTest.ForeColor = colors.font;
 
-            BtnDef.BackColor = cfg.BackColorButton;
-            BtnDef.ForeColor = cfg.FontColorButton;
+            BtnDelHistory.BackColor = colors.button;
+            BtnDelHistory.ForeColor = colors.font;
 
-            BtnTest.BackColor = cfg.BackColorButton;
-            BtnTest.ForeColor = cfg.FontColorButton;
-
-            BtnDelHistory.BackColor = cfg.BackColorButton;
-            BtnDelHistory.ForeColor = cfg.FontColorButton;
-
-            controlBox1.BorderColor = cfg.BorderColorButton;
+            controlBox1.BorderColor = colors.border;
 
             PainIndicaterColor();
-            
+
             this.Opacity = 0.9;
             this.Opacity = 1;
         }
 
         private void BtnDef_Click(object sender, EventArgs e)
         {
-            propertiesManager.DefaultProperties();
-            PaintUI();
+            //propertiesManager.DefaultProperties();
+            _settingsManager.SetDefaultColor();
+            UpdateUiLocal();
         }
+        #endregion 
 
+        #region Timer Setting
         private void TbxTime_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!Char.IsDigit(e.KeyChar))
@@ -182,43 +144,9 @@ namespace RandomWallpaper
             CbxChange_CheckedChanged(null,null);
         }
 
-        private void CbxAutoLoad_CheckedChanged(object sender, EventArgs e)
-        {
-            
-
-            if (CbxAutoLoad.Checked)
-            {
-                if(string.IsNullOrWhiteSpace(Path))
-                {
-                    MessageBox.Show("Для того что бы установить автозагрузку, нужно выбрать папку с обоями в главном окне.", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    CbxAutoLoad.Checked = false;
-                    return;
-                }
-
-                propertiesManager.SetAutoLoadApp(Path);
-            }
-            else
-            {
-                propertiesManager.DisAutoLoadApp();
-            }
-        }
-
-        private void BtnDelHistory_Click(object sender, EventArgs e)
-        {
-            ManagetHistory managetHistory = new ManagetHistory();
-            bool del = managetHistory.DeleteHistory();
-
-            if (del)
-            {
-                MessageBox.Show("История удалена", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                IsDelete = del;
-            }
-            
-
-        }
-
         private void CbxChange_CheckedChanged(object sender, EventArgs e)
         {
+
             if (CbxChange.Checked)
             {
                 if (string.IsNullOrWhiteSpace(Path))
@@ -228,27 +156,57 @@ namespace RandomWallpaper
                     return;
                 }
 
-                propertiesManager.StartUpdate(int.Parse(TbxTime.Text));
-
-                IsUpdateWallp = true;
+                _settingsManager.TimerStart(int.Parse(TbxTime.Text));
             }
             else
             {
-                propertiesManager.StopUpdate();
-                IsUpdateWallp = false;
+                _settingsManager.TimerStop();
             }
+        }
+        #endregion
+
+        #region AutoLoad Setting
+        private void CbxAutoLoad_CheckedChanged(object sender, EventArgs e)
+        {
+            
+            if (CbxAutoLoad.Checked)
+            {
+                if(string.IsNullOrWhiteSpace(Path))
+                {
+                    MessageBox.Show("Для того что бы установить автозагрузку, нужно выбрать папку с обоями в главном окне.", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    CbxAutoLoad.Checked = false;
+                    return;
+                }
+
+                _settingsManager.AutoLoadEnable();
+            }
+            else
+            {
+                _settingsManager.AutoLoadDisable();
+            }
+        }
+        #endregion
+
+        private void BtnDelHistory_Click(object sender, EventArgs e)
+        {
+            ManagetHistory managetHistory = new ManagetHistory();
+            bool del = managetHistory.DeleteHistory();
+
+            if (del)
+            {
+                MessageBox.Show("История удалена", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
+            }
+            
+
         }
 
         private void CbxMessage_CheckedChanged(object sender, EventArgs e)
         {
-            var cfg = propertiesManager.GetConfigurat();
-
-            if (cfg == null)
-                cfg = new Configurat();
-
-            cfg.IsShowMessage = !CbxMessage.Checked;
-
-            propertiesManager.SaveUI(cfg);
+            if (CbxMessage.Checked)
+                _settingsManager.AlertEnable();
+            else
+                _settingsManager.AlertDisable();
         }
 
     }
