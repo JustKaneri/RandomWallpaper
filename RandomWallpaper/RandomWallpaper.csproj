@@ -69,7 +69,6 @@
     <Compile Include="Interface\IFileSave.cs" />
     <Compile Include="Model\ApplicationSettings.cs" />
     <Compile Include="Model\Source.cs" />
-    <Compile Include="PropertiesControl\Configurat.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,7 +84,6 @@
     <Compile Include="HistoryControl\History.cs" />
     <Compile Include="ImageBacground.cs" />
     <Compile Include="HistoryControl\ManagetHistory.cs" />
-    <Compile Include="PropertiesControl\PropertiesManager.cs" />
     <Compile Include="Wallpaper\LastWallpaper.cs" />
     <Compile Include="Wallpaper\Manager.cs" />
     <Compile Include="Wallpaper\NowWallpaper.cs" />
